@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": [
+    "src/**/*.js",
+    "src/**/*.vue",
+    "electron-main/**/*.js",
+    "electron-preload/**/*.js"
+, "electron-main/serial.cjs"  ]
+}
