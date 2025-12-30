@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@vueuse/electron": "^14.1.0",
+    "echarts": "^6.0.0",
     "element-plus": "^2.11.9",
+    "moment": "^2.30.1",
     "pinia": "^3.0.4",
     "serialport": "^12.0.0",
     "unplugin-icons": "^22.5.0",
