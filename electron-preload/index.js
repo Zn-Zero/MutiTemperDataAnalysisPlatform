@@ -49,11 +49,18 @@ contextBridge.exposeInMainWorld('serialApi', {
   offError: (callback) => _off('error', callback),
   offClosed: (callback) => _off('closed', callback),
 
+  selectFile: () => ipcRenderer.invoke('select-file'),
+  readFile: (filePath) => ipcRenderer.invoke('read-file'),
+
   // 移除所有监听（便捷方法）
   removeAllListeners: () => {
-    ['serial:data', 'serial:error', 'serial:closed'].forEach(event => {
-      ipcRenderer.removeAllListeners(event);
-      listeners[event.replace('serial:', '')] = [];
+    // 仅移除通过 _on 注册的 serial 相关事件监听器
+    ['data', 'error', 'closed'].forEach(event => {
+      const fullEventName = `serial:${event}`;
+      ipcRenderer.removeAllListeners(fullEventName);
+      if (listeners[event]) {
+        listeners[event] = [];
+      }
     });
   }
 });

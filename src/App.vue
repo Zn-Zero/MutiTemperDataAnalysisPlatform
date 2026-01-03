@@ -8,7 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div>
+  <div style="height: 100vh; width: 100vw; overflow: hidden;">
     <RouterView />
     <BackBtn />
   </div>

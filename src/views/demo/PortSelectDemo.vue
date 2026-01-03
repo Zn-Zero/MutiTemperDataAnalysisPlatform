@@ -1,4 +1,5 @@
 <script setup>
+import { ElMessage, ElLoading } from 'element-plus'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -23,9 +24,12 @@ const BaudOpt = [
 ]
 
 const initPorts = async () => {
+  const loading = ElLoading.service({ fullscreen: true, text: '正在扫描串口...' })
+  portList.splice(0, portList.length)  // 清空列表
   const ports = await window.serialApi.list()
   init.value = false
   portList.push(...ports)
+  loading.close()
 }
 
 onMounted(async () => {

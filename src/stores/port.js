@@ -3,23 +3,23 @@ import { defineStore } from 'pinia'
 
 export const usePortStore = defineStore('port', () => {
   const port = ref(null)
-  const portIns = ref(null)
+  const portConfig = ref(null)
   // const portData = reactive({})
 
   const portPath = computed(() => port ? port.path : null)
 
   const getOpenedPort = _ => {
-    return { port, portIns }
+    return { port, portConfig }
   }
 
-  const setOpenedPort = (new_port, new_portIns) => {
+  const setOpenedPort = (new_port, new_portConfig) => {
     port.value = new_port
-    portIns.value = new_portIns
+    portConfig.value = new_portConfig
   }
 
   const removeOpenedPort = _ => {
     port.value = null
-    portIns.value = null
+    portConfig.value = null
   }
 
   return { portPath, getOpenedPort, setOpenedPort, removeOpenedPort }

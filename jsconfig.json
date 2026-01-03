@@ -9,6 +9,7 @@
     "src/**/*.js",
     "src/**/*.vue",
     "electron-main/**/*.js",
-    "electron-preload/**/*.js"
-, "electron-main/serial.cjs"  ]
+    "electron-preload/**/*.js",
+    "electron-main/serial.cjs"
+  ]
 }

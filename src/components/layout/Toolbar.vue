@@ -1,68 +1,48 @@
 <template>
   <div class="toolbar-content">
     <!-- 导入文件按钮 -->
-    <el-button 
-      type="primary" 
-      icon="Upload" 
-      @click="handleImport"
-    >
-      导入文件
-    </el-button>
+    <!-- <el-button type="primary" :icon="Upload" @click="handleImport" title="导入文件"/> -->
     
     <!-- 数据导出按钮 -->
-    <el-button 
-      type="success" 
-      icon="Download" 
-      @click="handleExport"
-    >
-      导出数据
-    </el-button>
+    <el-button type="success" :icon="Download" @click="handleExport" title="导出数据"/>
     
     <!-- 图表设置按钮 -->
-    <el-button 
-      type="default" 
-      icon="Setting" 
-      @click="handleChartSettings"
-    >
-      图表设置
-    </el-button>
+    <el-button type="default" :icon="Setting" @click="handleChartSettings" title="图表设置"/>
     
     <!-- 帮助按钮 -->
-    <el-button 
-      type="default" 
-      icon="Help" 
-      @click="handleHelp"
-    >
-      帮助
-    </el-button>
+    <el-button type="default" :icon="Help" @click="handleHelp" title="帮助"/>
     
     <!-- 分隔符 -->
     <div class="divider"></div>
     
     <!-- 状态栏信息 -->
     <div class="status-info">
-      <span v-if="connectedPort">已连接: {{ connectedPort.name }}</span>
-      <span v-else>未连接设备</span>
+      <el-text v-if="connectedPort" type="success">
+        已连接: 
+        <el-text type="info">{{ connectedPort.name }}</el-text>
+      </el-text>
+      <el-text v-else type="info">未连接设备</el-text>
     </div>
   </div>
 </template>
 
 <script setup>
 import { usePortStore } from '@/stores/port'
-import FileImporter from '../common/FileImporter.vue'
 import { ElMessageBox } from 'element-plus'
+import {
+  Download,
+  Setting,
+  Help,
+  Upload
+} from '@element-plus/icons-vue'
 
 const portStore = usePortStore()
 const connectedPort = portStore.getOpenedPort()
 
 // 处理文件导入
 const handleImport = () => {
-  FileImporter.show().then(file => {
-    // 跳转到数据分析页面
-    router.push({
-      path: '/analysis',
-      query: { file: file.path }
-    })
+  ElMessageBox.alert('文件导入功能开发中', '提示', {
+    confirmButtonText: '确定'
   })
 }
 

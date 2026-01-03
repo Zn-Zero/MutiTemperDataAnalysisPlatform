@@ -17,17 +17,17 @@ const router = createRouter({
         {
           path: '/port',
           name: 'port',
-          component: () => import('../views/PortSelect.vue')
+          component: () => import('../views/demo/PortSelectDemo.vue')
         },
         {
           path: '/readPort',
           name: 'readPort',
-          component: () => import('../views/ReadPort.vue')
+          component: () => import('../views/demo/ReadPortDemo.vue')
         },
         {
-          path: '/win',
-          name: 'win',
-          component: () => import('../views/WindowTest.vue')
+          path: '/file',
+          name: 'file',
+          component: () => import('../views/demo/FileExportDemo.vue')
         }
       ]
     }
