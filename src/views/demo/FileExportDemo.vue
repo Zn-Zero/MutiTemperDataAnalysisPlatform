@@ -1,6 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { ElMessage, ElEmpty, ElAlert, ElCard, ElTable, ElTableColumn, ElButton, ElHeader, ElMain } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import Papa from 'papaparse'
 
 // 状态管理
@@ -22,11 +21,12 @@ const handleSelectFile = async () => {
     isLoading.value = true
 
     // 1. 调用Electron API选择文件（非阻塞）
-    const selectResult = await window.electronAPI.selectFile()
+    const selectResult = await window.fileApi.selectFile()
     if (selectResult.canceled) return
 
+    console.log('Selected file paths:', selectResult.filePaths)
     // 2. 读取文件内容（主进程异步处理）
-    const fileResult = await window.electronAPI.readFile(selectResult.filePaths[0])
+    const fileResult = await window.fileApi.readFile(selectResult.filePaths[0])
     if (!fileResult.success) throw new Error(fileResult.error)
 
     fileInfo.value = {

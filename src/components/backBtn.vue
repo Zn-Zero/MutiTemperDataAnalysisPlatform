@@ -28,5 +28,6 @@
     position: fixed;
     bottom: 40px;
     right: 60px;
+    z-index: 1000;
   }
 </style>

@@ -49,9 +49,6 @@ contextBridge.exposeInMainWorld('serialApi', {
   offError: (callback) => _off('error', callback),
   offClosed: (callback) => _off('closed', callback),
 
-  selectFile: () => ipcRenderer.invoke('select-file'),
-  readFile: (filePath) => ipcRenderer.invoke('read-file'),
-
   // 移除所有监听（便捷方法）
   removeAllListeners: () => {
     // 仅移除通过 _on 注册的 serial 相关事件监听器
@@ -64,4 +61,9 @@ contextBridge.exposeInMainWorld('serialApi', {
     });
   }
 });
+
+contextBridge.exposeInMainWorld('fileApi', {
+  selectFile: () => ipcRenderer.invoke('select-file'),
+  readFile: (filePath) => ipcRenderer.invoke('read-file', filePath)
+})
 // console.log("platform", os.platform());
