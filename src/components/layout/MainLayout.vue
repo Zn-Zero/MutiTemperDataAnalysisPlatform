@@ -1,11 +1,13 @@
 <template>
   <el-container style="height: 100vh; overflow: hidden;">
     <!-- 顶部工具栏 -->
-    <el-header height="50px" class="toolbar"><Toolbar /></el-header>
+    <el-header height="30px" class="toolbar"><Toolbar /></el-header>
     
     <el-container>
       <!-- 左侧串口连接记录 -->
-      <el-aside width="150px" class="sidebar"><SerialSidebar /></el-aside>
+      <el-aside width="250px" class="sidebar">
+        <el-scrollbar style="height: 100%; padding-bottom: 20px;"><SerialSidebar /></el-scrollbar>
+      </el-aside>
       <el-container>
         <!-- 主内容区域 -->
         <el-main class="main-content"><router-view /></el-main>
@@ -16,7 +18,7 @@
 </template>
 
 <script setup>
-import Toolbar from './Toolbar.vue'
+import Toolbar from './toolbar/Toolbar.vue'
 import SerialSidebar from './Sidebar.vue'
 import Footer from './Footer.vue'
 </script>
@@ -29,6 +31,7 @@ import Footer from './Footer.vue'
 }
 
 .sidebar {
+  height: calc(100vh - 30px);
   background-color: #f5f7fa;
   border-right: 1px solid #e4e7ed;
   overflow-y: auto;
@@ -37,5 +40,6 @@ import Footer from './Footer.vue'
 .main-content {
   padding: 16px;
   overflow-y: auto;
+
 }
 </style>

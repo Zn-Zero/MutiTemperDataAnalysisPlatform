@@ -105,3 +105,28 @@ export function parseInputToByteArray(input, options = {}) {
     resolve(byteArray);
   });
 }
+
+/**
+ * 判断值是否为空白
+ * @param {*} value - 要检查的值
+ * @returns {boolean} - 如果值为空白则返回 true，否则返回 false
+ */
+export function isBlank(value) {
+  // 检查是否为 null 或 undefined
+  if (value === null || value === undefined) {
+    return true;
+  }
+  
+  // 检查是否为字符串类型，如果是则去除首尾空白后判断长度
+  if (typeof value === 'string') {
+    return value.trim().length === 0;
+  }
+  
+  // 检查是否为数组类型，如果是则判断长度
+  if (Array.isArray(value)) {
+    return value.length === 0;
+  }
+  
+  // 对于其他类型，转换为字符串后判断
+  return String(value).trim().length === 0;
+}

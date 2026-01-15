@@ -14,19 +14,19 @@ const currentPage = ref(1)
 const isAllLoaded = ref(false)
 
 // 处理文件选择
-const handleSelectFile = async () => {
+const handleselectExcel = async () => {
   try {
     // 重置状态
     resetState()
     isLoading.value = true
 
     // 1. 调用Electron API选择文件（非阻塞）
-    const selectResult = await window.fileApi.selectFile()
+    const selectResult = await window.excelApi.selectExcel()
     if (selectResult.canceled) return
 
     console.log('Selected file paths:', selectResult.filePaths)
     // 2. 读取文件内容（主进程异步处理）
-    const fileResult = await window.fileApi.readFile(selectResult.filePaths[0])
+    const fileResult = await window.excelApi.readExcel(selectResult.filePaths[0])
     if (!fileResult.success) throw new Error(fileResult.error)
 
     fileInfo.value = {
@@ -120,7 +120,7 @@ const resetState = () => {
     <el-header class="app-header">
       <h1>CSV文件解析工具</h1>
       <el-button 
-        @click="handleSelectFile" 
+        @click="handleselectExcel" 
         type="primary" 
         icon="el-icon-upload"
         :loading="isLoading"

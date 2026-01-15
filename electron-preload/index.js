@@ -62,8 +62,13 @@ contextBridge.exposeInMainWorld('serialApi', {
   }
 });
 
+contextBridge.exposeInMainWorld('excelApi', {
+  selectExcel: () => ipcRenderer.invoke('select-file'),
+  readExcel: (filePath) => ipcRenderer.invoke('read-file', filePath)
+})
+
 contextBridge.exposeInMainWorld('fileApi', {
-  selectFile: () => ipcRenderer.invoke('select-file'),
-  readFile: (filePath) => ipcRenderer.invoke('read-file', filePath)
+  saveData: (data, filePath) => ipcRenderer.invoke('persist:save', data, filePath),
+  readFile: (filePath) => ipcRenderer.invoke('persist:read', filePath)
 })
 // console.log("platform", os.platform());

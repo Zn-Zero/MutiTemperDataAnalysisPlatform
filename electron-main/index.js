@@ -3,7 +3,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { initSerialIpc } from './serial.js'
-import { initFileIpc } from './file.js'
+import { initExcelIpc } from './excel.js'
 
 const __filenameNew = fileURLToPath(import.meta.url)
 
@@ -19,6 +19,7 @@ const createWindow = () => {
   const win = new BrowserWindow({
     title: '多路温度数据分析',
     // frame: false,
+    autoHideMenuBar: true,
     width: 1200,
     height: 800,
     webPreferences: {
@@ -30,7 +31,7 @@ const createWindow = () => {
 
   // win.webContents.openDevTools()
   initSerialIpc(win); // 初始化串口IPC
-  initFileIpc(win); // 初始化文件IPC
+  initExcelIpc(win); // 初始化文件IPC
   
   // 如果打包了，渲染index.html
   if (app.isPackaged) {

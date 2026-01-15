@@ -1,54 +1,40 @@
-import { ipcMain, dialog } from 'electron'
+import { app, ipcMain } from 'electron'
 import fs from 'fs/promises'
-import iconv from 'iconv-lite'
 import path from 'path'
 
-export function initFileIpc(mainWindow) {
-  // 1. 文件选择对话框（主进程处理，避免渲染进程权限问题）
-  ipcMain.handle('select-file', async () => {
-    const result = await dialog.showOpenDialog(mainWindow, {
-      title: '选择CSV文件',
-      filters: [
-        { name: 'Excel文件', extensions: ['csv', 'xlsx', 'xls'] },
-        { name: '所有文件', extensions: ['*'] }
-      ],
-      properties: ['openFile']
-    })
-    return result
-  })
-
-  // 2. 异步文件读取（核心：非阻塞+编码识别）
-  ipcMain.handle('read-file', async (_, filePath) => {
-    console.log('Reading file at path:', filePath)
-    try {
-      // 异步读取文件缓冲区（非阻塞）
-      const buffer = await fs.readFile(filePath)
-      let content = ''
-      let encoding = 'gbk'
-
-      // 智能编码识别（优先适配您的GBK文件）
-      // The "path" argument must be of type string or an instance of Buffer or URL. Received undefined
-      try {
-        content = iconv.decode(buffer, 'gbk')
-      } catch (e) {
-        try {
-          content = iconv.decode(buffer, 'utf8') // 您的文件使用此编码
-          encoding = 'utf8'
-        } catch (e2) {
-          content = iconv.decode(buffer, 'gb2312')
-          encoding = 'gb2312'
-        }
-      }
-
-      return {
-        success: true,
-        content,
-        encoding,
-        fileName: path.basename(filePath),
-        filePath
-      }
-    } catch (error) {
-      return { success: false, error: error.message }
-    }
-  })
+// todo 存在多个文件，用于存储不同数据
+const filePath ={
+  data: path.join(app.getPath('userData'), 'historical-data.json'), // 存储历史数据的文件路径
+  config: path.join(app.getPath('userData'), 'user-config.json')    // 存储用户配置的文件路径
 }
+
+// 监听：保存持久化数据（渲染进程触发）
+ipcMain.on('persist:save', async (event, data, filePath) => {
+ try {
+    // 将数据转为JSON字符串写入文件
+    await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
+    // 给渲染进程返回“保存成功”的响应
+    event.reply('persist:save-reply', { success: true, message: '数据保存成功' });
+  } catch (err) {
+    // 可以添加日志记录
+    console.error('保存数据失败:', err);
+    event.reply('persist:save-reply', { success: false, message: `保存失败: ${err.message}` });
+  }
+});
+
+// 监听：读取持久化数据（渲染进程触发，需要返回数据）
+ipcMain.handle('persist:read', async (filePath) => {
+  try {
+    // 检查文件是否存在
+    if (!await fs.promises.access(filePath, fs.constants.F_OK)) {
+      return { success: true, data: {} }; // 文件不存在则返回空对象
+    }
+
+    // 读取文件并解析为JSON
+    const fileContent = await fs.promises.readFile(filePath, 'utf8');
+    const data = JSON.parse(fileContent);
+    return { success: true, data };
+  } catch (err) {
+    return { success: false, message: `读取失败：${err.message}` };
+  }
+});
