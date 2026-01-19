@@ -29,7 +29,7 @@ const onSubmit = () => {
 
 <template>
   <el-form :model="form" label-width="auto" style="max-width: 600px">
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="生产厂家">
           <el-input v-model="form.manufacturer" placeholder="请输入生产厂家" />
@@ -41,7 +41,7 @@ const onSubmit = () => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="产品编号">
           <el-input v-model="form.productNo" placeholder="请输入产品编号" />
@@ -53,7 +53,7 @@ const onSubmit = () => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="添加水印">
           <el-switch v-model="form.addWatermark" />
@@ -65,7 +65,7 @@ const onSubmit = () => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="公司名称">
           <el-input v-model="form.companyName" placeholder="请输入公司名称" />
@@ -77,7 +77,7 @@ const onSubmit = () => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="公司传真">
           <el-input v-model="form.companyFax" placeholder="请输入公司传真" />
@@ -89,14 +89,14 @@ const onSubmit = () => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="24">
         <el-form-item label="公司地址">
           <el-input v-model="form.companyAddress" placeholder="请输入公司地址" />
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="18">
         <el-form-item label="logo路径">
           <el-input v-model="form.logoPath" placeholder="请输入logo路径" />

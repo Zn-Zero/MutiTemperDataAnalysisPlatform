@@ -4,16 +4,13 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { initSerialIpc } from './serial.js'
 import { initExcelIpc } from './excel.js'
+import { initFileIpc } from './file.js'
+import { initOsIpc } from './os.js'
 
 const __filenameNew = fileURLToPath(import.meta.url)
 
 const __dirnameNew = path.dirname(__filenameNew)
 
-
-// 监听渲染进程方法
-ipcMain.on("window-new", (e, data) => {
-  console.log('ipcMain.on("window-new")',data);
-});
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -31,7 +28,9 @@ const createWindow = () => {
 
   // win.webContents.openDevTools()
   initSerialIpc(win); // 初始化串口IPC
-  initExcelIpc(win); // 初始化文件IPC
+  initExcelIpc(win);  // 初始化Excel文件处理IPC
+  initFileIpc(win);   // 初始化持久化文件处理IPC
+  initOsIpc(win);     // 初始化操作系统相关IPC
   
   // 如果打包了，渲染index.html
   if (app.isPackaged) {

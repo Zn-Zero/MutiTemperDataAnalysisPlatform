@@ -1,6 +1,6 @@
 // src/store/instrumentStore.js
 import { defineStore } from 'pinia'
-import { ElLoading } from 'element-plus'
+import { ElLoading, ElMessage } from 'element-plus'
 
 // 定义store，命名为useInstrumentStore
 export const useInstrumentStore = defineStore('instrument', () => {
@@ -71,9 +71,10 @@ export const useInstrumentStore = defineStore('instrument', () => {
 
   // todo 在基础设置保存后，立即生成通道默认配置
   const generateDefaultChannelConfig = (config) => {
-    channelConfig.splice(0, channelConfig.length)
-    for (let i = 0; i < config.channels; i++) {
-      channelConfig.push({
+    channelConfig.value.splice(0, channelConfig.value.length)
+    // for (let i = 0; i < config.channels; i++) {
+    for (let i = 0; i < 64; i++) {
+      channelConfig.value.push({
         channelID: i + 1,
         channelName: `通道${i + 1}`,
         highLimit: null,
@@ -87,8 +88,8 @@ export const useInstrumentStore = defineStore('instrument', () => {
   }
 
   const setChannelConfig = (config) => {
-    channelConfig.splice(0, channelConfig.length)
-    channelConfig.push(...config)
+    channelConfig.value.splice(0, channelConfig.value.length)
+    channelConfig.value.push(...config)
   }
 
   // todo 动态获取系统可用端口列表
@@ -108,21 +109,27 @@ export const useInstrumentStore = defineStore('instrument', () => {
   }
 
   // todo 从配置文件中获取默认仪器配置
-  const setDefaultInsConfig = (config) => {
-    defaultInsConfig.port        = config.port        || ''
-    defaultInsConfig.baudRate    = config.baudRate    || ''
-    defaultInsConfig.insType     = config.insType     || ''
-    defaultInsConfig.insName     = config.insName     || ''
-    defaultInsConfig.insAddress  = config.insAddress  || ''
-    defaultInsConfig.channels    = config.channels    || ''
-    defaultInsConfig.interval    = config.interval    || ''
-    defaultInsConfig.duration    = config.duration    || ''
-    defaultInsConfig.begin       = config.begin       || ''
-    defaultInsConfig.warningType = config.warningType || ''
+  const setDefaultInsConfig = (configFromFile) => {
+    defaultInsConfig.port        = configFromFile.port        || ''
+    defaultInsConfig.baudRate    = configFromFile.baudRate    || ''
+    defaultInsConfig.insType     = configFromFile.insType     || ''
+    defaultInsConfig.insName     = configFromFile.insName     || ''
+    defaultInsConfig.insAddress  = configFromFile.insAddress  || ''
+    defaultInsConfig.channels    = configFromFile.channels    || ''
+    defaultInsConfig.interval    = configFromFile.interval    || ''
+    defaultInsConfig.duration    = configFromFile.duration    || ''
+    defaultInsConfig.begin       = configFromFile.begin       || ''
+    defaultInsConfig.warningType = configFromFile.warningType || ''
   }
 
   const persistData = async (data, filePath) => {
-    await window.fileApi.saveData(data, filePath)
+    try {
+      await window.fileApi.saveData(data, filePath)
+      return true
+    } catch (error) {
+      ElMessage.error('保存数据时出错:', error)
+      return false
+    }
   }
 
   return {

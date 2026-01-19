@@ -1,5 +1,4 @@
 // electron-preload/index.js
-import os from "os";
 const { contextBridge, ipcRenderer } = require('electron');
 
 // 存储监听回调（避免重复绑定、方便移除）
@@ -71,4 +70,14 @@ contextBridge.exposeInMainWorld('fileApi', {
   saveData: (data, filePath) => ipcRenderer.invoke('persist:save', data, filePath),
   readFile: (filePath) => ipcRenderer.invoke('persist:read', filePath)
 })
-// console.log("platform", os.platform());
+
+contextBridge.exposeInMainWorld('osApi', {
+  platform: () => ipcRenderer.invoke('window:platform'),
+  close: () => ipcRenderer.invoke('window:close'),
+  isFullScreen: () => ipcRenderer.invoke('window:isfullscreen'),
+  fullScreen: () => ipcRenderer.invoke('window:fullscreen'),
+  exitFullScreen: () => ipcRenderer.invoke('window:exitfullscreen'),
+  sysmsg: (msg, type, title) => ipcRenderer.invoke('window:sysmsg', msg, type, title),
+  openFile: (options) => ipcRenderer.invoke('window:openfile', options),
+  saveFile: (options) => ipcRenderer.invoke('window:savefile', options)
+});

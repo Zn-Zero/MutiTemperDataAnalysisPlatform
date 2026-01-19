@@ -3,12 +3,19 @@ import SerialPortForm from '@/components/dialog/serialPortForm.vue'
 import { ElMessageBox } from 'element-plus'
 
 const showPortFormDialog = ref(false)
+const fullScreen = ref(false)
 
 // 处理下拉菜单命令
 const handleCommand = (command) => {
   switch (command) {
     case 'newInc':
       handleAddInstrument()
+      break
+    case 'fullScreen':
+      handleFullScreen()
+      break
+    case 'exitfullScreen':
+      handleExitFullScreen()
       break
     case 'exit':
       handleExit()
@@ -21,6 +28,26 @@ const handleAddInstrument = () => {
   showPortFormDialog.value = true
 }
 
+// 全屏
+const handleFullScreen = () => {
+  
+  // if (fullScreen.value) {
+  //   window.osApi.exitFullScreen()
+  // } else {
+  //   window.osApi.fullScreen()
+  // }
+  window.osApi.fullScreen()
+
+  fullScreen.value = window.osApi.isFullScreen()
+}
+
+// 退出全屏
+const handleExitFullScreen = () => {
+  if (!fullScreen.value) return
+  window.osApi.exitFullScreen()
+  fullScreen.value = false
+}
+
 // 退出
 const handleExit = () => {
   ElMessageBox.confirm('确定要退出应用吗？', '退出', {
@@ -28,7 +55,8 @@ const handleExit = () => {
     cancelButtonText: '取消',
     type: 'warning'
   }).then(() => {
-    window.close()
+    // todo 退出前保存所有配置和数据，断开端口连接，再执行退出操作
+    window.osApi.closeWindow()
   })
 }
 </script>
@@ -39,6 +67,8 @@ const handleExit = () => {
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item command="newInc">添加仪器</el-dropdown-item>
+        <el-dropdown-item v-if="!fullScreen" command="fullScreen">全屏</el-dropdown-item>
+        <el-dropdown-item v-else command="exitfullScreen">退出全屏</el-dropdown-item>
         <el-dropdown-item command="exit">退出</el-dropdown-item>
       </el-dropdown-menu>
     </template>

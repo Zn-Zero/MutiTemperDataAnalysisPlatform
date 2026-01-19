@@ -162,13 +162,12 @@ const instrumentList = ref([
     ]
   }
 ])
-
 </script>
 
 <template>
   <el-tree
     ref="InstrumentTree"
-    style="background-color: unset;max-width: 250px"
+    class="instrument-tree"
     :data="instrumentList"
     node-key="id"
     :expand-on-click-node="false"
@@ -185,6 +184,11 @@ const instrumentList = ref([
 </template>
 
 <style scoped lang="scss">
+.instrument-tree {
+  background-color: unset;
+  max-width: 250px;
+}
+  
 .instrument-node {
   display: flex;
   align-items: center;

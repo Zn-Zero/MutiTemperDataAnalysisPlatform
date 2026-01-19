@@ -1,5 +1,6 @@
 <script setup>
 import BaseInfoForm from './components/baseInfoForm.vue'
+import costumSetting from './components/costumSetting.vue'
 import ProdInfo from './components/prodInfo.vue'
 
 const portFormDialogVisibleModel = defineModel({
@@ -34,7 +35,7 @@ const handleClose = (done) => {
         <base-info-form @close-form="handleClose"/>
       </el-tab-pane>
       <el-tab-pane label="通道个性化设置">
-        <base-info-form />
+        <costum-setting />
       </el-tab-pane>
       <el-tab-pane label="产品标识">
         <prod-info />

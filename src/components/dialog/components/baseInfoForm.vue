@@ -39,7 +39,7 @@ onMounted(() => {
 
 <template>
   <el-form :model="form" label-width="auto" style="max-width: 600px">
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="仪器端口">
           <el-select v-model="form.port" placeholder="请选择端口">
@@ -65,7 +65,7 @@ onMounted(() => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="仪器型号">
           <el-input v-model="form.insType" placeholder="请输入仪器型号" />
@@ -77,7 +77,7 @@ onMounted(() => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="仪器地址">
           <el-input v-model="form.insAddress" placeholder="请输入仪器地址" />
@@ -96,7 +96,7 @@ onMounted(() => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="采集间隔">
           <el-input v-model="form.interval" type="number" placeholder="请输入采集间隔">
@@ -112,7 +112,7 @@ onMounted(() => {
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-form-item label="起始通道">
           <el-select v-model="form.begin" placeholder="请选择起始通道">
