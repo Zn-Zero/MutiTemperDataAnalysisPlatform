@@ -1,5 +1,5 @@
 // electron-main/index.js
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { initSerialIpc } from './serial.js'
@@ -31,6 +31,8 @@ const createWindow = () => {
   initExcelIpc(win);  // 初始化Excel文件处理IPC
   initFileIpc(win);   // 初始化持久化文件处理IPC
   initOsIpc(win);     // 初始化操作系统相关IPC
+
+
   
   // 如果打包了，渲染index.html
   if (app.isPackaged) {

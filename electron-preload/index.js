@@ -72,7 +72,7 @@ contextBridge.exposeInMainWorld('fileApi', {
 })
 
 contextBridge.exposeInMainWorld('osApi', {
-  platform: () => ipcRenderer.invoke('window:platform'),
+  env: () => ipcRenderer.invoke('window:env'),
   close: () => ipcRenderer.invoke('window:close'),
   isFullScreen: () => ipcRenderer.invoke('window:isfullscreen'),
   fullScreen: () => ipcRenderer.invoke('window:fullscreen'),

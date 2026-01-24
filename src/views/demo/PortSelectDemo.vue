@@ -49,7 +49,7 @@ const choosePort = (port) => {
 
       port.isOpen = true
 
-      router.push('/readPort')
+      router.push('/demo/port/read')
     }).catch((err) => {
       ElMessage.error('端口操作失败：' + err.message)
     });

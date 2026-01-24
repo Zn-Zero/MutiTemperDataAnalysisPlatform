@@ -71,7 +71,7 @@ onMounted(() => {
       type="primary" 
       :icon="Back" 
       circle 
-      @click="router.push('/port')" 
+      @click="router.push('/demo/port')" 
     />
   </div>
 </template>

@@ -1,29 +1,29 @@
 <script setup>
-import { useInstrumentStore } from '@/stores/instrument'
+import { useInstrumentFormConfigStore } from '@/stores/instrumentFormConfig'
 
 const emit = defineEmits(['closeForm'])
 
-const instrumentStore = useInstrumentStore()
+const instrumentFormConfigStore = useInstrumentFormConfigStore()
 
-const portList = instrumentStore.portList
-const baudRateOpt = instrumentStore.baudRateOpt
-const warningTypeOpt = instrumentStore.warningTypeOpt
-const channelsOpt = instrumentStore.channelsOpt
-const beginOpt = instrumentStore.beginOpt
-const defaultInsConfig = instrumentStore.defaultInsConfig
+const portList = instrumentFormConfigStore.portList
+const baudRateOpt = instrumentFormConfigStore.baudRateOpt
+const warningTypeOpt = instrumentFormConfigStore.warningTypeOpt
+const channelAmountOpt = instrumentFormConfigStore.channelAmountOpt
+const beginOpt = instrumentFormConfigStore.beginOpt
+const defaultInsConfig = instrumentFormConfigStore.defaultInsConfig
 
 // todo 默认值填充
 const form = reactive({
-  port:        defaultInsConfig.port,       // 仪器端口
-  baudRate:    defaultInsConfig.baudRate,   // 波特率
-  insType:     defaultInsConfig.insType,    // 仪器型号
-  insName:     defaultInsConfig.insName,    // 仪器名称
-  insAddress:  defaultInsConfig.insAddress, // 仪器地址
-  channels:    defaultInsConfig.channels,   // 通道数
-  interval:    defaultInsConfig.interval,   // 采样间隔
-  duration:    defaultInsConfig.duration,   // 持续时间
-  begin:       defaultInsConfig.begin,      // 起始通道
-  warningType: defaultInsConfig.warningType // 报警类型
+  port:          defaultInsConfig.port,          // 仪器端口
+  baudRate:      defaultInsConfig.baudRate,      // 波特率
+  insType:       defaultInsConfig.insType,       // 仪器型号
+  insName:       defaultInsConfig.insName,       // 仪器名称
+  insAddress:    defaultInsConfig.insAddress,    // 仪器地址
+  channelAmount: defaultInsConfig.channelAmount, // 通道总数
+  interval:      defaultInsConfig.interval,      // 采样间隔
+  duration:      defaultInsConfig.duration,      // 持续时间
+  begin:         defaultInsConfig.begin,         // 起始通道
+  warningType:   defaultInsConfig.warningType    // 报警类型
 })
 
 const onSubmit = () => {
@@ -33,7 +33,7 @@ const onSubmit = () => {
 }
 
 onMounted(() => {
-  instrumentStore.updatePortList()
+  instrumentFormConfigStore.updatePortList()
 })
 </script>
 
@@ -84,10 +84,10 @@ onMounted(() => {
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="通道数">
-          <el-select v-model="form.channels" placeholder="请选择通道数">
+        <el-form-item label="通道总数">
+          <el-select v-model="form.channelAmount" placeholder="请选择通道总数">
             <el-option
-              v-for="item in channelsOpt"
+              v-for="item in channelAmountOpt"
               :key="item.value"
               :label="item.label"
               :value="item.value"

@@ -1,7 +1,7 @@
 <script setup>
-import BaseInfoForm from './components/baseInfoForm.vue'
-import costumSetting from './components/costumSetting.vue'
-import ProdInfo from './components/prodInfo.vue'
+import BaseInfoForm from './components/BaseInfoForm.vue'
+import costumSetting from './components/CostumSetting.vue'
+import ProdInfo from './components/ProdInfo.vue'
 
 const portFormDialogVisibleModel = defineModel({
   type: Boolean,

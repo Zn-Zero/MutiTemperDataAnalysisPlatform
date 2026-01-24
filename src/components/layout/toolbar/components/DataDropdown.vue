@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/router'
 import { ElMessageBox } from 'element-plus'
 
 // 处理下拉菜单命令
@@ -7,17 +8,17 @@ const handleCommand = (command) => {
     case 'data':
       handleData()
       break
-    case 'curve':
+    case 'line':
       // 处理曲线命令
-      handleCurve()
+      handleLine()
       break
     case 'bar':
       // 处理柱状命令
       handleBar()
       break
-    case 'list': 
+    case 'table': 
       // 处理列表命令
-      handleList()
+      handleTable()
       break
     case 'history':
       // 处理历史数据命令
@@ -31,30 +32,22 @@ const handleCommand = (command) => {
 
 // 处理数据
 const handleData = () => {
-  ElMessageBox.alert('数据功能开发中', '数据', {
-    confirmButtonText: '确定'
-  })
+  router.push({ path: '/data/grid' })
 }
 
 // 处理曲线
-const handleCurve = () => {
-  ElMessageBox.alert('曲线功能开发中', '数据', {
-    confirmButtonText: '确定'
-  })
+const handleLine = () => {
+  router.push({ path: '/data/line' })
 }
 
 // 处理柱状
 const handleBar = () => {
-  ElMessageBox.alert('柱状功能开发中', '数据', {
-    confirmButtonText: '确定'
-  })
+  router.push({ path: '/data/bar' })
 }
 
 // 处理列表
-const handleList = () => {
-  ElMessageBox.alert('列表功能开发中', '数据', {
-    confirmButtonText: '确定'
-  })
+const handleTable = () => {
+  router.push({ path: '/data/table' })
 }
 
 // 历史数据
@@ -79,9 +72,9 @@ const handleImport = () => {
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item command="data">数据</el-dropdown-item>
-        <el-dropdown-item command="curve">曲线</el-dropdown-item>
+        <el-dropdown-item command="line">曲线</el-dropdown-item>
         <el-dropdown-item command="bar">柱状</el-dropdown-item>
-        <el-dropdown-item command="list">列表</el-dropdown-item>
+        <el-dropdown-item command="table">列表</el-dropdown-item>
         <el-dropdown-item command="history">历史数据</el-dropdown-item>
         <el-dropdown-item command="import">导入数据</el-dropdown-item>
       </el-dropdown-menu>

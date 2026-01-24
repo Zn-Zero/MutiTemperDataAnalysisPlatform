@@ -1,7 +1,9 @@
 <script setup>
-import SerialPortForm from '@/components/dialog/serialPortForm.vue'
+import SerialPortForm from '@/components/dialog/SerialPortForm.vue'
 import { ElMessageBox } from 'element-plus'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const showPortFormDialog = ref(false)
 const fullScreen = ref(false)
 
@@ -10,6 +12,9 @@ const handleCommand = (command) => {
   switch (command) {
     case 'newInc':
       handleAddInstrument()
+      break
+    case 'home':
+      handleHome()
       break
     case 'fullScreen':
       handleFullScreen()
@@ -26,6 +31,11 @@ const handleCommand = (command) => {
 // 添加仪器
 const handleAddInstrument = () => {
   showPortFormDialog.value = true
+}
+
+// 添加仪器
+const handleHome = () => {
+  router.push('/')
 }
 
 // 全屏
@@ -67,6 +77,7 @@ const handleExit = () => {
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item command="newInc">添加仪器</el-dropdown-item>
+        <!-- <el-dropdown-item v-if="router.currentRoute.value.fullPath !== '/home'" command="home">返回首页</el-dropdown-item> -->
         <el-dropdown-item v-if="!fullScreen" command="fullScreen">全屏</el-dropdown-item>
         <el-dropdown-item v-else command="exitfullScreen">退出全屏</el-dropdown-item>
         <el-dropdown-item command="exit">退出</el-dropdown-item>

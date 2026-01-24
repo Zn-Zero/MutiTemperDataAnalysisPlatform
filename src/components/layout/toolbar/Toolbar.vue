@@ -10,16 +10,11 @@
 </template>
 
 <script setup>
-import { usePortStore } from '@/stores/port'
 import MenuDropdown from './components/MenuDropdown.vue'
 import CommunicationDropdown from './components/CommunicationDropdown.vue'
 import DataDropdown from './components/DataDropdown.vue'
 import SettingsDropdown from './components/SettingsDropdown.vue'
 import HelpDropdown from './components/HelpDropdown.vue'
-
-const portStore = usePortStore()
-const connectedPort = portStore.getOpenedPort()
-
 
 </script>
 

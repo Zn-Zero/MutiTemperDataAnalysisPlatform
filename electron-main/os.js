@@ -1,4 +1,4 @@
-import { ipcMain, dialog } from 'electron'
+import { app, ipcMain, dialog } from 'electron'
 import os from 'os'
 
 export function initOsIpc(mainWindow) {
@@ -57,8 +57,13 @@ export function initOsIpc(mainWindow) {
   });
 
   // 显示操作系统信息
-  ipcMain.handle("window:platform", _ => {
-    return os.platform();
+  ipcMain.handle('window:env', async () => {
+    return {
+      platform: process.platform,
+      version: app.getVersion(),
+      memory: process.getSystemMemoryInfo(),
+      path: app.getPath('userData'),
+      isPackaged: app.isPackaged
+    };
   });
-
 }

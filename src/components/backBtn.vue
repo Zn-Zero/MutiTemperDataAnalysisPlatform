@@ -11,7 +11,7 @@
 </script>
 
 <template>
-  <div v-if="router.currentRoute.value.fullPath !== '/'" class="fixed">
+  <div v-if="router.currentRoute.value.fullPath !== '/home'" class="fixed">
     <!-- <ElButton type="primary" :icon="Menu" circle @click="router.push('/')" /> -->
     <ElButton
       title="返回菜单"

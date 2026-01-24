@@ -1,17 +1,17 @@
 <script setup>
-import { useInstrumentStore } from '@/stores/instrument'
+import { useInstrumentFormConfigStore } from '@/stores/instrumentFormConfig'
 import { onMounted, ref } from 'vue'
 
 const emit = defineEmits(['closeForm'])
 
-const instrumentStore = useInstrumentStore()
+const instrumentFormConfigStore = useInstrumentFormConfigStore()
 
 
 
 // 通道个性化设置默认值填充
-const channelConfig = ref([])
+const channel = ref([])
 
-const showChannels = ref(1)
+const showChannelGroup = ref(1)
 
 const onSubmit = () => {
   // todo 提交表单逻辑
@@ -25,10 +25,10 @@ const color2 = ref('#00ff00')
 
 onMounted(() => {
   // todo 临时的默认值填充，后续在创建仪器时动态生成
-  instrumentStore.generateDefaultChannelConfig()
+  instrumentFormConfigStore.generateDefaultChannel()
 
   // todo 添加仪器时，此界面不允许编辑。编辑仪器时，需从已有配置中读取
-  channelConfig.value = instrumentStore.channelConfig
+  channel.value = instrumentFormConfigStore.channel
 })
 
 </script>
@@ -38,7 +38,7 @@ onMounted(() => {
     <el-row :gutter="20">
       <el-col :span="24">
         <el-form-item label="显示通道">
-          <el-radio-group v-model="showChannels">
+          <el-radio-group v-model="showChannelGroup">
             <el-radio value="1">01~08 通道</el-radio>
             <el-radio value="2">09~16 通道</el-radio>
             <el-radio value="3">17~24 通道</el-radio>
