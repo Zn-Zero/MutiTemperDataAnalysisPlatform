@@ -26,50 +26,39 @@ const isFlicker = ref(true)
 const clickToStopFlicker = () => {
   isFlicker.value = false
   // todo log 记录点击取消闪烁的时间
+  // todo 将状态持久化到配置文件和状态管理中
 }
 </script>
 
 <template>
-  <el-icon
-    v-if="inValid"
-    class="pass"
-    :size="size"
-  >
+  <el-icon v-if="inValid" class="pass" :size="size">
     <SuccessFilled />
   </el-icon>
-  <el-icon
-    v-else
-    :class="{
-      'warning': true,
-      'flicker': isFlicker
-    }"
-    :size="size"
-    @click="clickToStopFlicker"
-  >
+  <el-icon v-else :class="{'warning': true, 'flicker': isFlicker}" :size="size" @click="clickToStopFlicker">
     <WarningFilled />
   </el-icon>
 </template>
 
 <style scoped lang="scss">
-.pass {
- color: #00ff00;
-}
+// .pass {
+//  color: #00ff00;
+// }
 
-.warning {
- color: #ff0000;
-}
+// .warning {
+//  color: #ff0000;
+// }
 
-.flicker {
-  animation: flickerAnimation 0.5s infinite;
-  cursor: pointer;
-}
+// .flicker {
+//   animation: flickerAnimation 0.5s infinite;
+//   cursor: pointer;
+// }
 
-@keyframes flickerAnimation {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
+// @keyframes flickerAnimation {
+//   0%, 100% {
+//     opacity: 1;
+//   }
+//   50% {
+//     opacity: 0;
+//   }
+// }
 </style>

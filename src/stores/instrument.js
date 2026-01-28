@@ -112,44 +112,50 @@ export const useInstrumentStore = defineStore('instrument', () => {
 
   const setTestData = () => {
     Object.assign(currentInstrument, {
-      port: 'COM3',             // 仪器端口
-      baudRate: 19200,          // 波特率
-      insType: '7064',          // 仪器型号
-      insName: '多路温度测试仪_cur', // 仪器名称
-      insAddress: null,         // 仪器地址
-      channelAmount: 64,      // 通道总数
-      channels: [],             // 通道配置
-      interval: 1000,           // 采样间隔ms
-      duration: 1,              // 持续时间h
-      begin: 'CH1',             // 起始通道
-      warningType: 1            // 报警类型
+      insId: 1,
+      port: 'COM3',
+      baudRate: 19200,
+      insType: '7064',
+      insName: '多路温度测试仪_cur',
+      insAddress: null,
+      channelAmount: 64,
+      channels: [],
+      interval: 1000,
+      duration: 1,
+      begin: 'CH1',
+      warningType: 1,
+      enabled: true
     })
 
     // 添加到仪器列表，同时生成一些简单的临时数据
     instrumentList.push(currentInstrument, {
-      port: 'COM4',             // 仪器端口
-      baudRate: 19200,          // 波特率
-      insType: '7032',          // 仪器型号
-      insName: '多路温度测试仪1', // 仪器名称
-      insAddress: null,         // 仪器地址
-      channelAmount: 32,      // 通道总数
-      channels: [],             // 通道配置
-      interval: 1000,           // 采样间隔ms
-      duration: 1,              // 持续时间h
-      begin: 'CH9',             // 起始通道
-      warningType: 1            // 报警类型
+      insId: 2,
+      port: 'COM4',
+      baudRate: 19200,
+      insType: '7032',
+      insName: '多路温度测试仪1',
+      insAddress: null,
+      channelAmount: 32,
+      channels: [],
+      interval: 1000,
+      duration: 1,
+      begin: 'CH9',
+      warningType: 1,
+      enabled: false
     },{
-      port: 'COM5',             // 仪器端口
-      baudRate: 19200,          // 波特率
-      insType: '7008',          // 仪器型号
-      insName: '多路温度测试仪2', // 仪器名称
-      insAddress: null,         // 仪器地址
-      channelAmount: 8,         // 通道总数
-      channels: [],             // 通道配置
-      interval: 1000,           // 采样间隔ms
-      duration: 1,              // 持续时间h
-      begin: 'CH3',             // 起始通道
-      warningType: 1            // 报警类型
+      insId: 3,
+      port: 'COM5',
+      baudRate: 19200,
+      insType: '7008',
+      insName: '多路温度测试仪2',
+      insAddress: null,
+      channelAmount: 8,
+      channels: [],
+      interval: 1000,
+      duration: 1,
+      begin: 'CH3',
+      warningType: 1,
+      enabled: false
     })
 
     instrumentList.forEach(ins => {

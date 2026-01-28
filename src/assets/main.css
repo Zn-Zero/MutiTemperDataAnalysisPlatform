@@ -19,6 +19,31 @@ a,
   padding: 3px;
 }
 
+.pass {
+  color: #00ff00 !important;
+}
+
+.warning {
+  color: #ff0000 !important;
+}
+
+.flicker {
+  animation: flickerAnimation 0.5s infinite;
+  cursor: pointer !important;
+}
+
+@keyframes flickerAnimation {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);

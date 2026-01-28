@@ -42,25 +42,21 @@ const router = createRouter({
             {
               path: 'grid',
               name: 'datagrid',
-              params: { dataViewName: '仪表图' },
-              component: () => import('../views/dataview/dataGrid.vue')
+              component: () => import('../views/dataview/DataGrid.vue')
             },
             {
               path: 'bar',
               name: 'databar',
-              params: { dataViewName: '柱状图' },
               component: () => import('../views/dataview/DataBar.vue')
             },
             {
               path: 'line',
               name: 'dataline',
-              params: { dataViewName: '折线图' },
               component: () => import('../views/dataview/DataLine.vue')
             },
             {
               path: 'table',
               name: 'datatable',
-              params: { dataViewName: '实时采集数据' },
               component: () => import('../views/dataview/DataTable.vue')
             }
           ]

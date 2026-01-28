@@ -16,6 +16,7 @@ declare module 'vue' {
     BaseInfoForm: typeof import('./components/dialog/components/BaseInfoForm.vue')['default']
     ChartToolbar: typeof import('./components/charts/ChartToolbar.vue')['default']
     CommunicationDropdown: typeof import('./components/layout/toolbar/components/CommunicationDropdown.vue')['default']
+    ContextMenu: typeof import('./components/ContextMenu.vue')['default']
     Costumsetting: typeof import('./components/dialog/components/costumsetting.vue')['default']
     CostumSetting: typeof import('./components/dialog/components/CostumSetting.vue')['default']
     DataDropdown: typeof import('./components/layout/toolbar/components/DataDropdown.vue')['default']

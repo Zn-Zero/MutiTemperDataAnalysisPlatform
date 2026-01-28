@@ -73,7 +73,7 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
 
 /*-----------------------↑表单Options↑------------------------------*/
 
-  // todo 默认仪器配置 生成时需要加入id和icon
+  // todo 默认仪器配置 生成时需要加入insId
   const defaultInsConfig = reactive({
     port: null,          // 仪器端口
     baudRate: null,      // 波特率
@@ -85,7 +85,8 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
     interval: null,      // 采样间隔
     duration: null,      // 持续时间
     begin: null,         // 起始通道
-    warningType: null    // 报警类型
+    warningType: null,   // 报警类型
+    enabled: false       // 是否启用该仪器
   })
 
   // todo 在基础设置保存后，立即生成通道默认配置
@@ -94,6 +95,7 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
     // for (let i = 0; i < instrument.channelAmount; i++) {
     for (let i = 0; i < 64; i++) {
       instrument.channels.push({
+        insId: instrument.insId,                       // 所属仪器ID
         channelID: `CH${i + 1}`,                       // 通道ID
         channelName: `通道${i + 1}`,                   // 通道名称
         highLimit: 100,                                // 高限报警值
@@ -101,10 +103,10 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
         sensorType: 'K',                               // 传感器类型 [热电偶：J, K, T, E, N, S, R, B, 热电阻：PT100]
         sensorModel: null,                             // 传感器型号
         sensorSerial: null,                            // 传感器序列号
-        max: null,                                     // 最大值
-        min: null,                                     // 最小值
-        average: null,                                 // 平均值
-        current: null,                                 // 当前值
+        max: '--.--',                                  // 最大值
+        min: '--.--',                                  // 最小值
+        average: '--.--',                              // 平均值
+        current: '--.--',                              // 当前值
         unit: '℃',                                    // 单位 [℃, °F, K, °R]
         enabled: true,                                 // 是否启用该通道
         visible: true,                                 // 是否在图表中显示该通道

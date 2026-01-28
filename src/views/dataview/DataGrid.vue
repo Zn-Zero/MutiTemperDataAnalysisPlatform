@@ -2,106 +2,165 @@
 import DataLayout from './DataLayout.vue'
 import ValidSignal from '@/components/ValidSignal.vue'
 import { useInstrumentStore } from '@/stores/instrument'
+import { ElMessage } from 'element-plus'
 
 const instrumentStore = useInstrumentStore()
 
 // 当前仪器信息
 const currentInstrument = computed(() => instrumentStore.currentInstrument)
 
+// 当前通道信息
+const currentChannels = computed(() => {
+  if (!currentInstrument.value) return null
+  return currentInstrument.value.channels || null
+})
+
+// 获取当前页的通道数据
+const getPagedChannels = (pageInfo) => {
+  if (!currentChannels.value) return []
+  // 计算分页起始位置
+  const start = (pageInfo.currentPage - 1) * pageInfo.pageSize
+  return currentChannels.value.slice(start, start + pageInfo.pageSize)
+}
+
+// 右键菜单位置
+const position = ref(DOMRect.fromRect({ x: 0, y: 0 }))
+// 右键点击的通道
+const clickedChannel = ref(null)
+// 处理右键菜单事件
+const handleContextmenu = (event, channel) => {
+  const { clientX, clientY } = event
+  // 设置右键菜单位置和点击的通道
+  position.value = DOMRect.fromRect({
+    x: clientX,
+    y: clientY,
+  })
+  clickedChannel.value = channel
+  event.preventDefault()
+}
+
+const handleContextmenuClick = (command) => {
+  switch (command) {
+    case 'copy-link':
+      handleCopyLink(clickedChannel.value)
+      break
+    case 'edit-channel':
+      console.log('修改通道信息')
+      break
+    default:
+      break
+  }
+}
+
+const handleCopyLink = (channel) => {
+  try {
+    window.osApi.copyToClipboard(`${channel.channelID}\t${channel.sensorType}\t${channel.current}` +
+      `\tMax:${channel.max}\tMin:${channel.min}\tAve:${channel.average}\t${channel.channelName}`)
+  } catch (error) {
+    ElMessage.error('复制通道链接失败,请稍后重试')
+    console.error('复制通道链接失败:', error)
+    return
+  }
+}
+
 onMounted(() => {
 
 })
+/*
+{
+  insId --------> 所属仪器ID
+  channelID ----> 通道ID
+  channelName --> 通道名称
+  highLimit ----> 高限报警值
+  lowLimit -----> 低限报警值
+  sensorType ---> 传感器类型 [热电偶：J, K, T, E, N, S, R, B, 热电阻：PT100]
+  sensorModel --> 传感器型号
+  sensorSerial -> 传感器序列号
+  max ----------> 最大值
+  min ----------> 最小值
+  average ------> 平均值
+  current ------> 当前值
+  unit ---------> 单位 [℃, °F, K, °R]
+  enabled ------> 是否启用该通道
+  visible ------> 是否在图表中显示该通道
+  alarmed ------> 是否处于报警状态
+  alarmHistory -> 报警历史记录
+  color --------> 在图表中的颜色
+}
+*/
 </script>
 
 <template>
-  <data-layout>
+  <data-layout :title="'仪表图'" >
     <template #default="{ page }">
-      <el-row class="data-grid-container" :gutter="20">
-      <el-col :span="6">
-        <el-card class="channel-view" shadow="never">
-          <template #header>CH1 K ℃</template>
-          <el-text class="current-temperature">--.--</el-text>
-          <div class="sub-info-row max-temperature">
-            <el-text>Max: --.--</el-text>
-            <valid-signal :inValid="true" />
-          </div>
-          <div class="sub-info-row min-temperature">
-            <el-text>Min: --.--</el-text>
-            <valid-signal :inValid="false" />
-          </div>
-          <div class="sub-info-row ave-temperature">
-            <el-text>Ave: --.--</el-text>
-            <valid-signal :inValid="false" />
-          </div>
-          <template #footer>通道1</template>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="channel-view" shadow="hover">
-          <template #header>CH2 K ℃</template>
-          <el-text class="current-temperature">--.--</el-text>
-          <div class="sub-info-row max-temperature">
-            <el-text>Max: --.--</el-text>
-            <valid-signal :inValid="true" />
-          </div>
-          <div class="sub-info-row min-temperature">
-            <el-text>Min: --.--</el-text>
-            <valid-signal :inValid="false" />
-          </div>
-          <div class="sub-info-row ave-temperature">
-            <el-text>Ave: --.--</el-text>
-            <valid-signal :inValid="false" />
-          </div>
-          <template #footer>通道2</template>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="channel-view" shadow="hover">
-          <template #header>CH3 K ℃</template>
-          <el-text class="current-temperature">--.--</el-text>
-          <div class="sub-info-row max-temperature">
-            <el-text>Max: --.--</el-text>
-            <valid-signal :inValid="true" />
-          </div>
-          <div class="sub-info-row min-temperature">
-            <el-text>Min: --.--</el-text>
-            <valid-signal :inValid="false" />
-          </div>
-          <div class="sub-info-row ave-temperature">
-            <el-text>Ave: --.--</el-text>
-            <valid-signal :inValid="false" />
-          </div>
-          <template #footer>通道3</template>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="channel-view" shadow="hover">
-          <template #header>CH4 K ℃</template>
-          <el-text class="current-temperature">--.--</el-text>
-          <div class="sub-info-row max-temperature">
-            <el-text>Max: --.--</el-text>
-            <valid-signal :inValid="true" />
-          </div>
-          <div class="sub-info-row min-temperature">
-            <el-text>Min: --.--</el-text>
-            <valid-signal :inValid="false" />
-          </div>
-          <div class="sub-info-row ave-temperature">
-            <el-text>Ave: --.--</el-text>
-            <valid-signal :inValid="false" />
-          </div>
-          <template #footer>通道4</template>
-        </el-card>
-      </el-col>
-    </el-row>
+      <el-scrollbar class="data-grid-scrollbar" style="height: calc(100vh - 190px);padding-top: 20px">
+        <el-row v-if="!page.showAll" class="data-grid-container" :gutter="20">
+          <el-col
+            v-for="channel in getPagedChannels(page)"
+            :key="channel.channelID"
+            :span="6"
+            style="margin-bottom: 20px"
+          >
+            <el-card class="channel-view" shadow="never" @contextmenu="handleContextmenu($event, channel)">
+              <template #header>{{channel.channelID}} {{channel.sensorType}} {{channel.unit}}</template>
+              <el-text class="current-temperature">{{channel.current}}</el-text>
+              <div class="sub-info-row max-temperature">
+                <el-text>Max: {{channel.max}}</el-text>
+                <valid-signal :inValid="true" />
+              </div>
+              <div class="sub-info-row min-temperature">
+                <el-text>Min: {{channel.min}}</el-text>
+                <valid-signal :inValid="false" />
+              </div>
+              <div class="sub-info-row ave-temperature">
+                <el-text>Ave: {{channel.average}}</el-text>
+                <valid-signal :inValid="false" />
+              </div>
+              <template #footer>
+                <div class="channel-name" :title="channel.channelName">
+                  {{channel.channelName}}
+                </div>
+              </template>
+            </el-card>
+          </el-col>
+        </el-row>
+
+        <el-row v-else class="data-grid-container" :gutter="10">
+          <el-col
+            :span="6"
+            v-for="channel in currentChannels"
+            :key="channel.channelID"
+            style="margin-bottom: 10px"
+          >
+            <div class="channel-view-simple" @contextmenu="handleContextmenu($event, channel)">
+              <el-text>{{channel.channelID}}</el-text>
+              <!-- <el-text>{{channel.sensorType}}</el-text> -->
+              <!-- <el-text>{{channel.unit}}</el-text> -->
+              <el-text :title="channel.channelName">{{channel.channelName}}</el-text>
+              <el-text :class="{'flicker': channel.alarmed, 'warning': channel.alarmed}">{{channel.current}}</el-text>
+            </div>
+          </el-col>
+        </el-row>
+      </el-scrollbar>
     </template>
   </data-layout>
+
+  <context-menu :position="position" @menu-click="handleContextmenuClick">
+      <template #menu-item>
+        <el-dropdown-item command="copy-link">将链接复制到剪贴板</el-dropdown-item>
+        <el-dropdown-item command="edit-channel">修改通道信息</el-dropdown-item>
+      </template>
+    </context-menu>
 </template>
 
 <style scoped lang="scss">
 :deep(.el-card__header) {
   padding: 10px 15px;
   background-color: #f5f7fa;
+}
+
+:deep(.el-card__body) {
+  padding: 0 15px 15px;
 }
 
 :deep(.el-card__footer) {
@@ -113,6 +172,20 @@ onMounted(() => {
   .el-card__header {
     padding: 7px 10px;
   }
+}
+
+:deep(.data-grid-scrollbar) {
+  overflow-x: hidden;
+}
+
+.data-grid-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 .current-temperature {
@@ -130,4 +203,29 @@ onMounted(() => {
     font-size: 16px;
   }
 }
+
+.channel-name {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.channel-view-simple {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: #f5f7fa;
+  border-radius: 4px;
+  cursor: pointer;
+
+  .el-text {
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+} 
 </style>

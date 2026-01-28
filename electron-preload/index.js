@@ -79,5 +79,6 @@ contextBridge.exposeInMainWorld('osApi', {
   exitFullScreen: () => ipcRenderer.invoke('window:exitfullscreen'),
   sysmsg: (msg, type, title) => ipcRenderer.invoke('window:sysmsg', msg, type, title),
   openFile: (options) => ipcRenderer.invoke('window:openfile', options),
-  saveFile: (options) => ipcRenderer.invoke('window:savefile', options)
+  saveFile: (options) => ipcRenderer.invoke('window:savefile', options),
+  copyToClipboard: (content) => ipcRenderer.invoke('window:clipboard', content)
 });

@@ -1,4 +1,4 @@
-// electron-main/index.js
+// electron-main/index.js（完整修改后代码）
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -8,55 +8,56 @@ import { initFileIpc } from './file.js'
 import { initOsIpc } from './os.js'
 
 const __filenameNew = fileURLToPath(import.meta.url)
-
 const __dirnameNew = path.dirname(__filenameNew)
-
 
 const createWindow = () => {
   const win = new BrowserWindow({
     title: '多路温度数据分析',
-    // frame: false,
     autoHideMenuBar: true,
     width: 1200,
     height: 800,
     webPreferences: {
-      contextIsolation: true, // 是否开启隔离上下文
-      nodeIntegration: true, // 渲染进程使用Node API
-      preload: path.join(__dirnameNew, "../electron-preload/index.js"), // 需要引用js文件
+      contextIsolation: true, // 必须保持开启（安全隔离）
+      nodeIntegration: false, // 关闭Node API（开启contextIsolation后建议禁用，避免安全风险）
+      preload: path.join(__dirnameNew, "../electron-preload/index.js"),
+      // 关键：添加安全的CSP规则
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"], // 仅允许自身资源
+          scriptSrc: ["'self'"], // 仅允许自身脚本
+          styleSrc: ["'self'", "'unsafe-inline'"], // 允许内联样式（Vue/Element Plus 需用到）
+          imgSrc: ["'self'", "data:"], // 允许自身图片和base64图片
+          connectSrc: ["'self'", "http://localhost:5173"], // 开发环境允许本地Vue服务
+          fontSrc: ["'self'"],
+          objectSrc: ["'none'"], // 禁止object标签（减少风险）
+          upgradeInsecureRequests: [], // 自动升级http到https
+        },
+      },
     },
   });
 
-  // win.webContents.openDevTools()
-  initSerialIpc(win); // 初始化串口IPC
-  initExcelIpc(win);  // 初始化Excel文件处理IPC
-  initFileIpc(win);   // 初始化持久化文件处理IPC
-  initOsIpc(win);     // 初始化操作系统相关IPC
-
-
+  initSerialIpc(win);
+  initExcelIpc(win);
+  initFileIpc(win);
+  initOsIpc(win);
   
-  // 如果打包了，渲染index.html
   if (app.isPackaged) {
     win.loadFile(path.join(__dirnameNew, "../index.html"));
   } else {
-    let url = "http://localhost:5173/"; // 本地启动的vue项目路径
+    let url = "http://localhost:5173/";
     win.loadURL(url);
   }
 };
 
-
 app.whenReady().then(() => {
-  createWindow(); // 创建窗口
+  createWindow();
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
-
-// 关闭窗口
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
-
-

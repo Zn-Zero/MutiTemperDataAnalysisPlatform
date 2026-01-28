@@ -1,4 +1,4 @@
-import { app, ipcMain, dialog } from 'electron'
+import { app, ipcMain, dialog, clipboard } from 'electron'
 import os from 'os'
 
 export function initOsIpc(mainWindow) {
@@ -66,4 +66,15 @@ export function initOsIpc(mainWindow) {
       isPackaged: app.isPackaged
     };
   });
+
+  // 监听渲染进程的复制请求
+  ipcMain.handle('window:clipboard', (e, content) => {
+    try {
+      // 将内容写入剪贴板（text 格式）
+      clipboard.writeText(content)
+      return { success: true, message: '复制成功' }
+    } catch (error) {
+      return { success: false, message: '复制失败：' + error.message }
+    }
+  })
 }
