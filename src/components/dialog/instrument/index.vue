@@ -3,7 +3,7 @@ import BaseInfoForm from './components/BaseInfoForm.vue'
 import costumSetting from './components/CostumSetting.vue'
 import ProdInfo from './components/ProdInfo.vue'
 
-const portFormDialogVisibleModel = defineModel({
+const dialogVisibleModel = defineModel({
   type: Boolean,
   required: true
 })
@@ -16,7 +16,7 @@ const { title } = defineProps({
 })
 
 const handleClose = (done) => {
-  portFormDialogVisibleModel.value = false
+  dialogVisibleModel.value = false
   done()
 }
 
@@ -25,7 +25,7 @@ const handleClose = (done) => {
 <template>
   
   <el-dialog
-    v-model="portFormDialogVisibleModel"
+    v-model="dialogVisibleModel"
     width="700"
     :title="title"
     :before-close="handleClose"

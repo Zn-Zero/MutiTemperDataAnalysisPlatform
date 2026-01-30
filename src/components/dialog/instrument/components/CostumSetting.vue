@@ -6,8 +6,6 @@ const emit = defineEmits(['closeForm'])
 
 const instrumentFormConfigStore = useInstrumentFormConfigStore()
 
-
-
 // 通道个性化设置默认值填充
 const channel = ref([])
 
@@ -25,7 +23,7 @@ const color2 = ref('#00ff00')
 
 onMounted(() => {
   // todo 临时的默认值填充，后续在创建仪器时动态生成
-  instrumentFormConfigStore.generateDefaultChannel()
+  // instrumentFormConfigStore.generateDefaultChannel()
 
   // todo 添加仪器时，此界面不允许编辑。编辑仪器时，需从已有配置中读取
   channel.value = instrumentFormConfigStore.channel

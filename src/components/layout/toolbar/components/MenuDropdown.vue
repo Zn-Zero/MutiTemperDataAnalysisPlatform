@@ -1,10 +1,10 @@
 <script setup>
-import SerialPortForm from '@/components/dialog/SerialPortForm.vue'
+import InstrumentForm from '@/components/dialog/instrument/index.vue'
 import { ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const showPortFormDialog = ref(false)
+const instrumentFormVisible = ref(false)
 const fullScreen = ref(false)
 
 // 处理下拉菜单命令
@@ -30,7 +30,7 @@ const handleCommand = (command) => {
 
 // 添加仪器
 const handleAddInstrument = () => {
-  showPortFormDialog.value = true
+  instrumentFormVisible.value = true
 }
 
 // 添加仪器
@@ -85,7 +85,7 @@ const handleExit = () => {
     </template>
   </el-dropdown>
 
-  <serial-port-form v-model="showPortFormDialog" />
+  <instrument-form v-model="instrumentFormVisible" />
 </template>
 
 <style scoped lang="scss">

@@ -24,6 +24,10 @@ a,
 }
 
 .warning {
+  color: #FFAA00 !important;
+}
+
+.danger {
   color: #ff0000 !important;
 }
 

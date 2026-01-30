@@ -1,6 +1,7 @@
 <script setup>
 import DataLayout from './DataLayout.vue'
-import ValidSignal from '@/components/ValidSignal.vue'
+import ChannelForm from '@/components/dialog/channel/index.vue'
+import BatchChannelForm from '@/components/dialog/channel/batch/index.vue'
 import { useInstrumentStore } from '@/stores/instrument'
 import { ElMessage } from 'element-plus'
 
@@ -14,6 +15,9 @@ const currentChannels = computed(() => {
   if (!currentInstrument.value) return null
   return currentInstrument.value.channels || null
 })
+
+const channelFormVisible = ref(false)
+const batchChannelFormVisible = ref(false)
 
 // 获取当前页的通道数据
 const getPagedChannels = (pageInfo) => {
@@ -45,7 +49,10 @@ const handleContextmenuClick = (command) => {
       handleCopyLink(clickedChannel.value)
       break
     case 'edit-channel':
-      console.log('修改通道信息')
+      channelFormVisible.value = true
+      break
+    case 'batch-edit':
+      batchChannelFormVisible.value = true
       break
     default:
       break
@@ -66,28 +73,7 @@ const handleCopyLink = (channel) => {
 onMounted(() => {
 
 })
-/*
-{
-  insId --------> 所属仪器ID
-  channelID ----> 通道ID
-  channelName --> 通道名称
-  highLimit ----> 高限报警值
-  lowLimit -----> 低限报警值
-  sensorType ---> 传感器类型 [热电偶：J, K, T, E, N, S, R, B, 热电阻：PT100]
-  sensorModel --> 传感器型号
-  sensorSerial -> 传感器序列号
-  max ----------> 最大值
-  min ----------> 最小值
-  average ------> 平均值
-  current ------> 当前值
-  unit ---------> 单位 [℃, °F, K, °R]
-  enabled ------> 是否启用该通道
-  visible ------> 是否在图表中显示该通道
-  alarmed ------> 是否处于报警状态
-  alarmHistory -> 报警历史记录
-  color --------> 在图表中的颜色
-}
-*/
+
 </script>
 
 <template>
@@ -106,15 +92,15 @@ onMounted(() => {
               <el-text class="current-temperature">{{channel.current}}</el-text>
               <div class="sub-info-row max-temperature">
                 <el-text>Max: {{channel.max}}</el-text>
-                <valid-signal :inValid="true" />
+                <valid-signal :inValid="0" />
               </div>
               <div class="sub-info-row min-temperature">
                 <el-text>Min: {{channel.min}}</el-text>
-                <valid-signal :inValid="false" />
+                <valid-signal :inValid="1" />
               </div>
               <div class="sub-info-row ave-temperature">
                 <el-text>Ave: {{channel.average}}</el-text>
-                <valid-signal :inValid="false" />
+                <valid-signal :inValid="2" />
               </div>
               <template #footer>
                 <div class="channel-name" :title="channel.channelName">
@@ -146,11 +132,15 @@ onMounted(() => {
   </data-layout>
 
   <context-menu :position="position" @menu-click="handleContextmenuClick">
-      <template #menu-item>
-        <el-dropdown-item command="copy-link">将链接复制到剪贴板</el-dropdown-item>
-        <el-dropdown-item command="edit-channel">修改通道信息</el-dropdown-item>
-      </template>
-    </context-menu>
+    <template #menu-item>
+      <el-dropdown-item command="copy-link">将链接复制到剪贴板</el-dropdown-item>
+      <el-dropdown-item command="edit-channel">修改通道信息</el-dropdown-item>
+      <el-dropdown-item command="batch-edit">批量修改</el-dropdown-item>
+    </template>
+  </context-menu>
+
+  <channel-form v-model="channelFormVisible" :channel="clickedChannel"/>
+  <batch-channel-form v-model="batchChannelFormVisible" />
 </template>
 
 <style scoped lang="scss">

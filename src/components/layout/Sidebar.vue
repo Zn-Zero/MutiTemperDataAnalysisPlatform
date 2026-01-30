@@ -1,5 +1,4 @@
 <script setup>
-import { onClickOutside } from '@vueuse/core'
 import { useInstrumentStore } from '@/stores/instrument'
 import {
   Monitor,
@@ -9,6 +8,7 @@ import {
   Delete,
   View
 } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 
 const instrumentStore = useInstrumentStore()
 
@@ -27,13 +27,7 @@ const instrumentTree = reactive([
 
 // 右键菜单相关状态
 const currentNode = ref(null) // 当前右键点击的节点
-const dropdownRef = ref(null) // 下拉菜单引用
-const menuVisible = ref(false) // 菜单显示状态
 const menuPosition = ref({ x: 0, y: 0 }) // 菜单位置
-
-const triggerRef = ref({
-  getBoundingClientRect: () => menuPosition.value,
-})
 
 // 处理树节点右键事件
 const handleContextMenu = (event, data) => {
@@ -44,20 +38,21 @@ const handleContextMenu = (event, data) => {
     x: event.clientX,
     y: event.clientY,
   })
-  dropdownRef.value?.handleOpen()
 }
 
 // 右键菜单点击事件
 const handleMenuClick = (action) => {
-  dropdownRef.value?.handleClose()
   switch (action) {
     case 'view':
+      ElMessage.info('功能开发中')
       console.log('查看节点', currentNode.value)
       break
     case 'edit':
+      ElMessage.info('功能开发中')
       console.log('编辑节点', currentNode.value)
       break
     case 'delete':
+      ElMessage.info('功能开发中')
       console.log('删除节点', currentNode.value)
       break
   }
@@ -106,31 +101,19 @@ onMounted(() => {
     </template>
   </el-tree>
 
-  <el-dropdown
-    ref="dropdownRef"
-    :virtual-ref="triggerRef"
-    :show-arrow="false"
-    :popper-options="{
-      modifiers: [{ name: 'offset', options: { offset: [0, 0] } }],
-    }"
-    virtual-triggering
-    trigger="contextmenu"
-    placement="bottom-start"
-  >
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item :icon="View" @click="handleMenuClick('view')">
-          <span>查看</span>
-        </el-dropdown-item>
-        <el-dropdown-item :icon="Edit" @click="handleMenuClick('edit')">
-          <span>编辑</span>
-        </el-dropdown-item>
-        <el-dropdown-item :icon="Delete" @click="handleMenuClick('delete')" divided>
-          <span>删除</span>
-        </el-dropdown-item>
-      </el-dropdown-menu>
+  <context-menu :position="menuPosition" @menu-click="handleMenuClick">
+    <template #menu-item>
+      <el-dropdown-item :icon="View" @click="handleMenuClick('view')">
+        <span>查看</span>
+      </el-dropdown-item>
+      <el-dropdown-item :icon="Edit" @click="handleMenuClick('edit')">
+        <span>编辑</span>
+      </el-dropdown-item>
+      <el-dropdown-item :icon="Delete" @click="handleMenuClick('delete')" divided>
+        <span>删除</span>
+      </el-dropdown-item>
     </template>
-  </el-dropdown>
+  </context-menu>
 </template>
 
 <style scoped lang="scss">

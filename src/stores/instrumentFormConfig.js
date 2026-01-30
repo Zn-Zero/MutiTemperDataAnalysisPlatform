@@ -22,16 +22,16 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
   const portList = ref([])
 
   // todo 修改为从配置文件中获取波特率选项
-  const baudRateOpt = ref([
+  const baudRateOpt = [
     { label: '9600', value: '9600' },
     { label: '19200', value: '19200' },
     { label: '38400', value: '38400' },
     { label: '57600', value: '57600' },
     { label: '115200', value: '115200' }
-  ])
+  ]
 
   // todo 读取已连接设备的通道总数
-  const channelAmountOpt = ref([
+  const channelAmountOpt = [
     { label: '8路', value: '8' },
     { label: '16路', value: '16' },
     { label: '24路', value: '24' },
@@ -40,7 +40,7 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
     { label: '48路', value: '48' },
     { label: '56路', value: '56' },
     { label: '64路', value: '64' }
-  ])
+  ]
 
   // todo 起始通道选项，根据已连接设备的通道总数动态生成
   const beginOpt = ref([])
@@ -48,11 +48,30 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
     beginOpt.value.push(`${i}`)
   }
 
-  const warningTypeOpt = ref([
+  const warningTypeOpt = [
     { label: '蜂鸣音1', value: 'sound1' },
     { label: '蜂鸣音2', value: 'sound2' },
     { label: '语音告警', value: 'sound3' }
-  ])
+  ]
+
+const sensorTypeOpt = [
+  { value: 'J', label: 'J' },
+  { value: 'K', label: 'K' },
+  { value: 'T', label: 'T' },
+  { value: 'E', label: 'E' },
+  { value: 'N', label: 'N' },
+  { value: 'S', label: 'S' },
+  { value: 'R', label: 'R' },
+  { value: 'B', label: 'B' },
+  { value: 'PT100', label: 'PT100' }
+]
+
+const unitOpt = [
+  { value: '℃', label: '℃' },
+  { value: '°F', label: '°F' },
+  { value: 'K', label: 'K' },
+  { value: '°R', label: '°R' }
+]
 
   // todo 动态获取系统可用端口列表
   const updatePortList = () => {
@@ -104,7 +123,9 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
         sensorModel: null,                             // 传感器型号
         sensorSerial: null,                            // 传感器序列号
         max: '--.--',                                  // 最大值
+        extremeMax: '--.--',                           // 极限最大值
         min: '--.--',                                  // 最小值
+        extremeMin: '--.--',                           // 极限最小值
         average: '--.--',                              // 平均值
         current: '--.--',                              // 当前值
         unit: '℃',                                    // 单位 [℃, °F, K, °R]
@@ -138,6 +159,8 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
     channelAmountOpt,
     beginOpt,
     warningTypeOpt,
+    sensorTypeOpt,
+    unitOpt,
     generateDefaultChannel,
     updatePortList,
     addBaudRate,

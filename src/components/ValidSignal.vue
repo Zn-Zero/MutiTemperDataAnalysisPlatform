@@ -1,12 +1,13 @@
 <script setup>
 import {
   SuccessFilled,
-  WarningFilled
+  WarningFilled,
+  WarnTriangleFilled
 } from '@element-plus/icons-vue'
 
 const { inValid } = defineProps({
   inValid: {
-    type: Boolean,
+    type: Number,
     required: true
   },
   size: {
@@ -31,34 +32,16 @@ const clickToStopFlicker = () => {
 </script>
 
 <template>
-  <el-icon v-if="inValid" class="pass" :size="size">
+  <el-icon v-if="inValid === 0" class="pass" :size="size">
     <SuccessFilled />
   </el-icon>
-  <el-icon v-else :class="{'warning': true, 'flicker': isFlicker}" :size="size" @click="clickToStopFlicker">
+  <el-icon v-else-if="inValid === 1" class="warning" :size="size">
     <WarningFilled />
+  </el-icon>
+  <el-icon v-else-if="inValid === 2" :class="{'danger': true, 'flicker': isFlicker}" :size="size" @click="clickToStopFlicker">
+    <WarnTriangleFilled />
   </el-icon>
 </template>
 
 <style scoped lang="scss">
-// .pass {
-//  color: #00ff00;
-// }
-
-// .warning {
-//  color: #ff0000;
-// }
-
-// .flicker {
-//   animation: flickerAnimation 0.5s infinite;
-//   cursor: pointer;
-// }
-
-// @keyframes flickerAnimation {
-//   0%, 100% {
-//     opacity: 1;
-//   }
-//   50% {
-//     opacity: 0;
-//   }
-// }
 </style>
