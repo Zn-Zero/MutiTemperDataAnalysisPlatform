@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import ElementPlus from 'unplugin-element-plus/vite'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
@@ -70,6 +71,12 @@ export default defineConfig({
     ]),
     electronRenderer(),
     // polyfillExports()
+    VueI18n({
+      // 指定语言包目录
+      // include: path.resolve(__dirname, 'src/locales/**'),
+      localeDir: path.resolve(__dirname, './src/locales'),
+      runtimeOnly: false // 关闭运行时编译（优化性能）
+    }),
   ],
   build: {
     emptyOutDir: false, // 默认情况下，若 outDir 在 root 目录下，则 Vite 会在构建时清空该目录

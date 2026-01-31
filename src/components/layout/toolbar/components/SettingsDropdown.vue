@@ -1,6 +1,7 @@
 <script setup>
 import { ElMessageBox } from 'element-plus'
-const showLangOpt = ref(false) // 是否显示语言设置选项
+import LanguageDialog from '@/components/dialog/language/index.vue'
+const langDialogVisible = ref(false) // 是否显示语言设置选项
 
 // 处理下拉菜单命令
 const handleCommand = (command) => {
@@ -23,9 +24,7 @@ const handlePrint = () => {
 
 // 设置语言
 const handleLanguage = () => {
-  ElMessageBox.alert('设置语言功能开发中', '设置', {
-    confirmButtonText: '确定'
-  })
+  langDialogVisible.value = true
 }
 </script>
 
@@ -39,6 +38,8 @@ const handleLanguage = () => {
       </el-dropdown-menu>
     </template>
   </el-dropdown>
+
+  <LanguageDialog v-model="langDialogVisible" />
 </template>
 
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 // electron-main/index.js（完整修改后代码）
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { initSerialIpc } from './serial.js'
@@ -12,7 +12,7 @@ const __dirnameNew = path.dirname(__filenameNew)
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    title: '多路温度数据分析',
+    title: '',
     autoHideMenuBar: true,
     width: 1200,
     height: 800,
