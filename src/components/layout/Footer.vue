@@ -1,9 +1,9 @@
 <script setup>
-    
 </script>
 
 <template>
-  <el-text class="footer" type="info">多路温度数据分析平台 © 2026 温州桃梓仪器仪表有限公司 保留所有权利 | 版本号：V0.1.0 | 更新日期：2026-01-01</el-text>
+  <el-text class="footer" type="info">{{ $t('components.layout.footer.copyright') }}</el-text>
+	<!-- 多路温度数据分析平台 © 2026 温州桃梓仪器仪表有限公司 保留所有权利 | 版本号：V0.1.0 | 更新日期：2026-01-01 -->
 </template>
 
 <style scoped>

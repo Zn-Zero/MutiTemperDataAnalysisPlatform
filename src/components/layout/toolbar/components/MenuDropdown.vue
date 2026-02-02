@@ -2,7 +2,9 @@
 import InstrumentForm from '@/components/dialog/instrument/index.vue'
 import { ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 const instrumentFormVisible = ref(false)
 const fullScreen = ref(false)
@@ -60,9 +62,9 @@ const handleExitFullScreen = () => {
 
 // 退出
 const handleExit = () => {
-  ElMessageBox.confirm('确定要退出应用吗？', '退出', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+  ElMessageBox.confirm(t('components.layout.toolbar.menudropdown.confirm_exit'), t('components.layout.toolbar.menudropdown.exit'), { // 确定要退出应用吗？  // 退出
+    confirmButtonText: t('components.layout.toolbar.menudropdown.confirm'), // 确定
+    cancelButtonText: t('components.layout.toolbar.menudropdown.cancel'), // 取消
     type: 'warning'
   }).then(() => {
     // todo 退出前保存所有配置和数据，断开端口连接，再执行退出操作
@@ -73,14 +75,14 @@ const handleExit = () => {
 
 <template>
   <el-dropdown @command="handleCommand">
-    <el-text class="menu-text">菜单</el-text>
+    <el-text class="menu-text">{{ $t('components.layout.toolbar.menudropdown.menu') }}</el-text><!-- 菜单 -->
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item command="newInc">添加仪器</el-dropdown-item>
-        <!-- <el-dropdown-item v-if="router.currentRoute.value.fullPath !== '/home'" command="home">返回首页</el-dropdown-item> -->
-        <el-dropdown-item v-if="!fullScreen" command="fullScreen">全屏</el-dropdown-item>
-        <el-dropdown-item v-else command="exitfullScreen">退出全屏</el-dropdown-item>
-        <el-dropdown-item command="exit">退出</el-dropdown-item>
+        <el-dropdown-item command="newInc">{{ $t('components.layout.toolbar.menudropdown.add_instrument') }}</el-dropdown-item><!-- 添加仪器 -->
+        <!-- <el-dropdown-item v-if="router.currentRoute.value.fullPath !== '/home'" command="home">{{ $t('components.layout.toolbar.menudropdown.return_home') }}</el-dropdown-item> --><!-- 返回首页 -->
+        <el-dropdown-item v-if="!fullScreen" command="fullScreen">{{ $t('components.layout.toolbar.menudropdown.fullscreen') }}</el-dropdown-item><!-- 全屏 -->
+        <el-dropdown-item v-else command="exitfullScreen">{{ $t('components.layout.toolbar.menudropdown.exit_fullscreen') }}</el-dropdown-item><!-- 退出全屏 -->
+        <el-dropdown-item command="exit">{{ $t('components.layout.toolbar.menudropdown.exit') }}</el-dropdown-item><!-- 退出 -->
       </el-dropdown-menu>
     </template>
   </el-dropdown>

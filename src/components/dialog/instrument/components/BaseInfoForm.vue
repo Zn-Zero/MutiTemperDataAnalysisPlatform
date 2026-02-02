@@ -41,8 +41,8 @@ onMounted(() => {
   <el-form :model="form" label-width="auto" style="max-width: 600px">
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-form-item label="仪器端口">
-          <el-select v-model="form.port" placeholder="请选择端口">
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.instrument_port')"><!-- 仪器端口 -->
+          <el-select v-model="form.port" :placeholder="$t('components.dialog.instrument.baseinfoform.select_port')"><!-- 请选择端口 -->
             <el-option
               v-for="item in portList"
               :key="item"
@@ -53,8 +53,8 @@ onMounted(() => {
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="波特率">
-          <el-select v-model="form.baudRate" placeholder="请选择波特率">
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.baud_rate')"><!-- 波特率 -->
+          <el-select v-model="form.baudRate" :placeholder="$t('components.dialog.instrument.baseinfoform.select_baud_rate')"><!-- 请选择波特率 -->
             <el-option
               v-for="item in baudRateOpt"
               :key="item.value"
@@ -67,25 +67,25 @@ onMounted(() => {
     </el-row>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-form-item label="仪器型号">
-          <el-input v-model="form.insType" placeholder="请输入仪器型号" />
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.instrument_type')"><!-- 仪器型号 -->
+          <el-input v-model="form.insType" :placeholder="$t('components.dialog.instrument.baseinfoform.enter_instrument_type')" /><!-- 请输入仪器型号 -->
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="仪器名称">
-          <el-input v-model="form.insName" placeholder="请输入仪器名称" />
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.instrument_name')"><!-- 仪器名称 -->
+          <el-input v-model="form.insName" :placeholder="$t('components.dialog.instrument.baseinfoform.enter_instrument_name')" /><!-- 请输入仪器名称 -->
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-form-item label="仪器地址">
-          <el-input v-model="form.insAddress" placeholder="请输入仪器地址" />
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.instrument_address')"><!-- 仪器地址 -->
+          <el-input v-model="form.insAddress" :placeholder="$t('components.dialog.instrument.baseinfoform.enter_instrument_address')" /><!-- 请输入仪器地址 -->
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="通道总数">
-          <el-select v-model="form.channelAmount" placeholder="请选择通道总数">
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.channel_amount')"><!-- 通道总数 -->
+          <el-select v-model="form.channelAmount" :placeholder="$t('components.dialog.instrument.baseinfoform.select_channel_amount')"><!-- 请选择通道总数 -->
             <el-option
               v-for="item in channelAmountOpt"
               :key="item.value"
@@ -98,24 +98,24 @@ onMounted(() => {
     </el-row>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-form-item label="采集间隔">
-          <el-input v-model="form.interval" type="number" placeholder="请输入采集间隔">
-            <template #append>秒</template>
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.interval')"><!-- 采集间隔 -->
+          <el-input v-model="form.interval" type="number" :placeholder="$t('components.dialog.instrument.baseinfoform.enter_interval')">
+            <template #append>{{ $t('components.dialog.instrument.baseinfoform.seconds') }}</template><!-- 秒 -->
           </el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="持续时间">
-          <el-input v-model="form.duration" type="number" placeholder="请输入持续时间">
-            <template #append>小时</template>
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.duration')"><!-- 持续时间 -->
+          <el-input v-model="form.duration" type="number" :placeholder="$t('components.dialog.instrument.baseinfoform.enter_duration')">
+            <template #append>{{ $t('components.dialog.instrument.baseinfoform.hours') }}</template><!-- 小时 -->
           </el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-form-item label="起始通道">
-          <el-select v-model="form.begin" placeholder="请选择起始通道">
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.begin_channel')"><!-- 起始通道 -->
+          <el-select v-model="form.begin" :placeholder="$t('components.dialog.instrument.baseinfoform.select_begin_channel')"><!-- 请选择起始通道 -->
             <el-option
               v-for="item in beginOpt"
               :key="item"
@@ -126,8 +126,8 @@ onMounted(() => {
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="告警声音">
-          <el-select v-model="form.warningType" placeholder="请选择告警声音">
+        <el-form-item :label="$t('components.dialog.instrument.baseinfoform.warning_sound')"><!-- 告警声音 -->
+          <el-select v-model="form.warningType" :placeholder="$t('components.dialog.instrument.baseinfoform.select_warning_sound')"><!-- 请选择告警声音 -->
             <el-option
               v-for="item in warningTypeOpt"
               :key="item.value"
@@ -139,7 +139,7 @@ onMounted(() => {
       </el-col>
     </el-row>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">保存配置</el-button>
+      <el-button type="primary" @click="onSubmit">{{ $t('components.dialog.instrument.baseinfoform.save_config') }}</el-button><!-- 保存配置 -->
     </el-form-item>
   </el-form>
 </template>

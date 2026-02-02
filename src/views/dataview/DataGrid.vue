@@ -4,7 +4,9 @@ import ChannelForm from '@/components/dialog/channel/index.vue'
 import BatchChannelForm from '@/components/dialog/channel/batch/index.vue'
 import { useInstrumentStore } from '@/stores/instrument'
 import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const instrumentStore = useInstrumentStore()
 
 // 当前仪器信息
@@ -64,8 +66,8 @@ const handleCopyLink = (channel) => {
     window.osApi.copyToClipboard(`${channel.channelID}\t${channel.sensorType}\t${channel.current}` +
       `\tMax:${channel.max}\tMin:${channel.min}\tAve:${channel.average}\t${channel.channelName}`)
   } catch (error) {
-    ElMessage.error('复制通道链接失败,请稍后重试')
-    console.error('复制通道链接失败:', error)
+    ElMessage.error(t('view.dataview.datagrid.copylink_failed')) // 原文：复制通道链接失败,请稍后重试
+    console.error(t('view.dataview.datagrid.copylink_failed'), error) // 原文：复制通道链接失败,请稍后重试
     return
   }
 }
@@ -77,7 +79,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <data-layout :title="'仪表图'" >
+  <data-layout :title="$t('view.dataview.datagrid.title')" > <!-- 原文：仪表图 -->
     <template #default="{ page }">
       <el-scrollbar class="data-grid-scrollbar" style="height: calc(100vh - 190px);padding-top: 20px">
         <el-row v-if="!page.showAll" class="data-grid-container" :gutter="20">
@@ -91,15 +93,15 @@ onMounted(() => {
               <template #header>{{channel.channelID}} {{channel.sensorType}} {{channel.unit}}</template>
               <el-text class="current-temperature">{{channel.current}}</el-text>
               <div class="sub-info-row max-temperature">
-                <el-text>Max: {{channel.max}}</el-text>
+                <el-text>{{ $t('view.dataview.datagrid.max_label') }} {{channel.max}}</el-text> <!-- 原文：Max: -->
                 <valid-signal :inValid="0" />
               </div>
               <div class="sub-info-row min-temperature">
-                <el-text>Min: {{channel.min}}</el-text>
+                <el-text>{{ $t('view.dataview.datagrid.min_label') }} {{channel.min}}</el-text> <!-- 原文：Min: -->
                 <valid-signal :inValid="1" />
               </div>
               <div class="sub-info-row ave-temperature">
-                <el-text>Ave: {{channel.average}}</el-text>
+                <el-text>{{ $t('view.dataview.datagrid.avg_label') }} {{channel.average}}</el-text> <!-- 原文：Ave: -->
                 <valid-signal :inValid="2" />
               </div>
               <template #footer>
@@ -133,9 +135,9 @@ onMounted(() => {
 
   <context-menu :position="position" @menu-click="handleContextmenuClick">
     <template #menu-item>
-      <el-dropdown-item command="copy-link">将链接复制到剪贴板</el-dropdown-item>
-      <el-dropdown-item command="edit-channel">修改通道信息</el-dropdown-item>
-      <el-dropdown-item command="batch-edit">批量修改</el-dropdown-item>
+      <el-dropdown-item command="copy-link">{{ $t('view.dataview.datagrid.copylink') }}</el-dropdown-item> <!-- 原文：将链接复制到剪贴板 -->
+      <el-dropdown-item command="edit-channel">{{ $t('view.dataview.datagrid.editchannel') }}</el-dropdown-item> <!-- 原文：修改通道信息 -->
+      <el-dropdown-item command="batch-edit">{{ $t('view.dataview.datagrid.batchedit') }}</el-dropdown-item> <!-- 原文：批量修改 -->
     </template>
   </context-menu>
 

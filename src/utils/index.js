@@ -1,3 +1,7 @@
+import i18n from '@/locales'
+
+const { t } = i18n.global
+
 /**
  * 将数字索引对象转换为十六进制空格分隔的字符串
  * @param {Object} dataObj - 数字索引的对象（如{0:1,1:3,...6:135}）

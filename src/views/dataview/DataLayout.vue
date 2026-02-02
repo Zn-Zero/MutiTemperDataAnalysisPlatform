@@ -1,6 +1,8 @@
 <script setup>
 import { useInstrumentStore } from '@/stores/instrument'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const { title } = defineProps({
   title: {
     type: String,
@@ -16,7 +18,7 @@ const currentInstrument = computed(() => instrumentStore.currentInstrument)
 
 // todo 通道配置 根据仪器信息动态生成
 const channelOpts = computed(() => {
-  const base = [{ value: 'all', label: '全部' }]
+  const base = [{ value: 'all', label: t('view.dataview.datalayout.all') }] // 原文：全部
   const channels = currentInstrument.value?.channels || []
   const items = channels.map(item => ({
     value: item.channelID,
@@ -66,7 +68,9 @@ const handleShowAll = () => {
   page.showAll = !page.showAll
 }
 
-const showAllLabel = computed(() => page.showAll ? '缩小' : '放大')
+const showAllLabel = computed(() => page.showAll
+  ? t('view.dataview.datalayout.shrink') // 原文：缩小
+  : t('view.dataview.datalayout.expand')) // 原文：放大
 </script>
 
 <template>
@@ -80,7 +84,7 @@ const showAllLabel = computed(() => page.showAll ? '缩小' : '放大')
           multiple
           collapse-tags
           collapse-tags-tooltip
-          placeholder="通道选择"
+          :placeholder="$t('view.dataview.datalayout.channel_select_placeholder')" <!-- 原文：通道选择 -->
           style="width: 240px"
           @change="handleChange"
         >

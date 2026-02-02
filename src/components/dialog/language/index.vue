@@ -16,7 +16,7 @@ const props = defineProps({
   }
 })
 
-const dialogTitle = computed(() => props.title || t('components.dialog.language.title'))
+const dialogTitle = computed(() => props.title || t('components.dialog.language.title')) // 原文：语言设置
 
 const curLang = localStorage.getItem('app-locale') || 'en-US';
 
@@ -32,13 +32,12 @@ const handleChangeLanguage = (val) => {
     background: 'rgba(0, 0, 0, 0.7)',
   })
 
-  locale.value = val
-  localStorage.setItem('app-locale', val)
-  window.osApi.changeLocale(val) // 通知主进程更改语言
-
   setTimeout(() => {
+    locale.value = val
+    localStorage.setItem('app-locale', val)
+    window.osApi.changeLocale(val) // 通知主进程更改语言
     loading.close()
-  }, 2000)
+  }, 700)
 }
 
 </script>
@@ -52,15 +51,15 @@ const handleChangeLanguage = (val) => {
   >
     <el-row>
       <el-col :span="8">
-        <el-text>{{ $t('components.dialog.language.current') }}{{ curLang }}</el-text>
+        <el-text>{{ $t('components.dialog.language.current') }}{{ curLang }}</el-text> <!-- 原文：当前语言： -->
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="8">
-        <el-button type="primary" plain @click="handleChangeLanguage('zh-CN')">简体中文</el-button>
+        <el-button type="primary" plain @click="handleChangeLanguage('zh-CN')">{{ $t('components.dialog.language.zh_cn') }}</el-button> <!-- 原文：简体中文 -->
       </el-col>
       <el-col :span="8">
-        <el-button type="primary" plain @click="handleChangeLanguage('en-US')">English</el-button>
+        <el-button type="primary" plain @click="handleChangeLanguage('en-US')">{{ $t('components.dialog.language.en_us') }}</el-button> <!-- 原文：English -->
       </el-col>
       <!-- <el-col :span="8">
         <el-button type="primary" plain @click="handleChangeLanguage('zh-TW')">繁體中文</el-button>

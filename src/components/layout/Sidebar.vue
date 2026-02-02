@@ -1,5 +1,6 @@
 <script setup>
 import { useInstrumentStore } from '@/stores/instrument'
+import { watch } from 'vue'
 import {
   Monitor,
   Menu,
@@ -9,6 +10,9 @@ import {
   View
 } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
 
 const instrumentStore = useInstrumentStore()
 
@@ -20,7 +24,7 @@ const instrumentTree = reactive([
   {
     id: 0,
     icon: 'Menu',
-    label: '仪器管理',
+    label: '', // label: 仪器管理  留空是为了根据语言环境动态生成
     children: []
   }
 ])
@@ -44,15 +48,15 @@ const handleContextMenu = (event, data) => {
 const handleMenuClick = (action) => {
   switch (action) {
     case 'view':
-      ElMessage.info('功能开发中')
+      ElMessage.info(t('components.layout.sidebar.feature_in_development')) // 功能开发中
       console.log('查看节点', currentNode.value)
       break
     case 'edit':
-      ElMessage.info('功能开发中')
+      ElMessage.info(t('components.layout.sidebar.feature_in_development')) // 功能开发中
       console.log('编辑节点', currentNode.value)
       break
     case 'delete':
-      ElMessage.info('功能开发中')
+      ElMessage.info(t('components.layout.sidebar.feature_in_development')) // 功能开发中
       console.log('删除节点', currentNode.value)
       break
   }
@@ -60,12 +64,13 @@ const handleMenuClick = (action) => {
 
 const buildInstrumentTree = () => {
   // 构建仪器树数据
+  instrumentTree[0].label = t('components.layout.sidebar.instrument_management') // 仪器管理
   instrumentTree[0].children = instrumentList.map((ins, index) => {
     return {
       id: (index + 1) * 10,
       insId: ins.insId,
       icon: 'Monitor',
-      label: ins.insName || `仪器${index + 1}`,
+      label: ins.insName || `${t('components.layout.sidebar.instrument')}${index + 1}`, // 仪器
       enabled: ins.enabled,
       children: Array.from({ length: ins.channelAmount }, (_, i) => ({
         id: (index + 1) * 1000 + i + 1,
@@ -78,6 +83,10 @@ const buildInstrumentTree = () => {
 }
 
 onMounted(() => {
+  buildInstrumentTree()
+})
+
+watch(locale, () => {
   buildInstrumentTree()
 })
 </script>
@@ -104,13 +113,13 @@ onMounted(() => {
   <context-menu :position="menuPosition" @menu-click="handleMenuClick">
     <template #menu-item>
       <el-dropdown-item :icon="View" @click="handleMenuClick('view')">
-        <span>查看</span>
+        <span>{{ $t('components.layout.sidebar.view') }}</span><!-- 查看 -->
       </el-dropdown-item>
       <el-dropdown-item :icon="Edit" @click="handleMenuClick('edit')">
-        <span>编辑</span>
+        <span>{{ $t('components.layout.sidebar.edit') }}</span><!-- 编辑 -->
       </el-dropdown-item>
       <el-dropdown-item :icon="Delete" @click="handleMenuClick('delete')" divided>
-        <span>删除</span>
+        <span>{{ $t('components.layout.sidebar.delete') }}</span><!-- 删除 -->
       </el-dropdown-item>
     </template>
   </context-menu>

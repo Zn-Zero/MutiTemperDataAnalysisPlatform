@@ -35,23 +35,23 @@ onMounted(() => {
   <el-form :model="form" label-width="auto" style="max-width: 600px">
     <el-row :gutter="20">
       <el-col :span="24">
-        <el-form-item label="显示通道">
+        <el-form-item :label="$t('components.dialog.instrument.costumsetting.show_channel')"><!-- 显示通道 -->
           <el-radio-group v-model="showChannelGroup">
-            <el-radio value="1">01~08 通道</el-radio>
-            <el-radio value="2">09~16 通道</el-radio>
-            <el-radio value="3">17~24 通道</el-radio>
-            <el-radio value="4">25~32 通道</el-radio>
-            <el-radio value="5">33~40 通道</el-radio>
-            <el-radio value="6">41~48 通道</el-radio>
-            <el-radio value="7">49~56 通道</el-radio>
-            <el-radio value="8">57~64 通道</el-radio>
+            <el-radio value="1">{{ $t('components.dialog.instrument.costumsetting.channel_01_08') }}</el-radio><!-- 01~08 通道 -->
+            <el-radio value="2">{{ $t('components.dialog.instrument.costumsetting.channel_09_16') }}</el-radio><!-- 09~16 通道 -->
+            <el-radio value="3">{{ $t('components.dialog.instrument.costumsetting.channel_17_24') }}</el-radio><!-- 17~24 通道 -->
+            <el-radio value="4">{{ $t('components.dialog.instrument.costumsetting.channel_25_32') }}</el-radio><!-- 25~32 通道 -->
+            <el-radio value="5">{{ $t('components.dialog.instrument.costumsetting.channel_33_40') }}</el-radio><!-- 33~40 通道 -->
+            <el-radio value="6">{{ $t('components.dialog.instrument.costumsetting.channel_41_48') }}</el-radio><!-- 41~48 通道 -->
+            <el-radio value="7">{{ $t('components.dialog.instrument.costumsetting.channel_49_56') }}</el-radio><!-- 49~56 通道 -->
+            <el-radio value="8">{{ $t('components.dialog.instrument.costumsetting.channel_57_64') }}</el-radio><!-- 57~64 通道 -->
           </el-radio-group>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-form-item label="通道一">
+        <el-form-item :label="$t('components.dialog.instrument.costumsetting.channel_one')"><!-- 通道一 -->
           <el-input v-model="input1" placeholder="Please input">
             <template #append>
               <el-color-picker v-model="color1" />
@@ -60,7 +60,7 @@ onMounted(() => {
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="通道二">
+        <el-form-item :label="$t('components.dialog.instrument.costumsetting.channel_two')"><!-- 通道二 -->
           <el-input v-model="input2" placeholder="Please input">
             <template #append>
               <el-color-picker v-model="color2" />
@@ -71,7 +71,7 @@ onMounted(() => {
     </el-row>
     
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">保存配置</el-button>
+      <el-button type="primary" @click="onSubmit">{{ $t('components.dialog.instrument.costumsetting.save_config') }}</el-button><!-- 保存配置 -->
     </el-form-item>
   </el-form>
 </template>

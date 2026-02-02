@@ -2,7 +2,9 @@
 import { defineStore } from 'pinia'
 import { ElLoading, ElMessage } from 'element-plus'
 import { useInstrumentFormConfigStore } from './instrumentFormConfig'
+import i18n from '@/locales'
 
+const { t } = i18n.global
 // 定义store，命名为useInstrumentStore
 export const useInstrumentStore = defineStore('instrument', () => {
 
@@ -35,7 +37,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
       Object.assign(currentInstrument, instrument)
       return true
     } else {
-      ElMessage.error(`未找到仪器: ${insName}`)
+      ElMessage.error(t('stores.instrument.not_found_instrument', { insName })) // 原文：未找到仪器: {insName}
       return false
     }
   }
@@ -53,7 +55,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
     if (instrumentIndex !== -1) {
       instrumentList[instrumentIndex] = { ...instrumentList[instrumentIndex], ...config }
     } else {
-      ElMessage.error(`未找到仪器: ${insName}`)
+      ElMessage.error(t('stores.instrument.not_found_instrument', { insName })) // 原文：未找到仪器: {insName}
       return false
     }
     return true
@@ -63,7 +65,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
   const UpdateChannel = (insName, channelId, config) => {
     const instrument = instrumentList.find(ins => ins.insName === insName)
     if (!instrument) {
-      ElMessage.error(`未找到仪器: ${insName}`)
+      ElMessage.error(t('stores.instrument.not_found_instrument', { insName })) // 原文：未找到仪器: {insName}
       return false
     }
     
@@ -75,7 +77,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
       if (channelIndex !== -1) {
         instrument.channels[channelIndex] = { ...instrument.channels[channelIndex], ...config }
       } else {
-        ElMessage.error(`未找到通道: ${channelId} 在仪器: ${insName} 中`)
+        ElMessage.error(t('stores.instrument.not_found_channel', { channelId, insName })) // 原文：未找到通道: {channelId} 在仪器: {insName} 中
         return false
       }
     }
@@ -89,7 +91,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
       await window.fileApi.saveData(JSON.stringify(instrumentList), 'instrument.json')
       return true
     } catch (error) {
-      ElMessage.error('保存数据时出错:', error)
+      ElMessage.error(t('stores.instrument.save_error')) // 原文：保存数据时出错
       return false
     }
   }
@@ -105,7 +107,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
       }
       return true
     } catch (error) {
-      ElMessage.error('加载数据时出错:', error)
+      ElMessage.error(t('stores.instrument.load_error')) // 原文：加载数据时出错
       return false
     }
   }
@@ -116,7 +118,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
       port: 'COM3',
       baudRate: 19200,
       insType: '7064',
-      insName: '多路温度测试仪_cur',
+      insName: t('stores.instrument.test_name_current'), // 原文：多路温度测试仪_cur
       insAddress: null,
       channelAmount: 64,
       channels: [],
@@ -133,7 +135,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
       port: 'COM4',
       baudRate: 19200,
       insType: '7032',
-      insName: '多路温度测试仪1',
+      insName: t('stores.instrument.test_name_1'), // 原文：多路温度测试仪1
       insAddress: null,
       channelAmount: 32,
       channels: [],
@@ -147,7 +149,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
       port: 'COM5',
       baudRate: 19200,
       insType: '7008',
-      insName: '多路温度测试仪2',
+      insName: t('stores.instrument.test_name_2'), // 原文：多路温度测试仪2
       insAddress: null,
       channelAmount: 8,
       channels: [],

@@ -1,6 +1,9 @@
 // src/store/instrumentFormConfig.js
 import { defineStore } from 'pinia'
 import { ElLoading, ElMessage } from 'element-plus'
+import i18n from '@/locales'
+
+const { t } = i18n.global
 
 // 定义store，命名为useInstrumentFormConfigStore
 export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', () => {
@@ -31,16 +34,10 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
   ]
 
   // todo 读取已连接设备的通道总数
-  const channelAmountOpt = [
-    { label: '8路', value: '8' },
-    { label: '16路', value: '16' },
-    { label: '24路', value: '24' },
-    { label: '32路', value: '32' },
-    { label: '40路', value: '40' },
-    { label: '48路', value: '48' },
-    { label: '56路', value: '56' },
-    { label: '64路', value: '64' }
-  ]
+  const channelAmountOpt = [8, 16, 24, 32, 40, 48, 56, 64].map((count) => ({
+    label: t('stores.instrumentformconfig.channel_amount_label', { count }), // 原文：{count}路
+    value: `${count}`
+  }))
 
   // todo 起始通道选项，根据已连接设备的通道总数动态生成
   const beginOpt = ref([])
@@ -49,9 +46,9 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
   }
 
   const warningTypeOpt = [
-    { label: '蜂鸣音1', value: 'sound1' },
-    { label: '蜂鸣音2', value: 'sound2' },
-    { label: '语音告警', value: 'sound3' }
+    { label: t('stores.instrumentformconfig.warning_sound1'), value: 'sound1' }, // 原文：蜂鸣音1
+    { label: t('stores.instrumentformconfig.warning_sound2'), value: 'sound2' }, // 原文：蜂鸣音2
+    { label: t('stores.instrumentformconfig.warning_voice'), value: 'sound3' } // 原文：语音告警
   ]
 
 const sensorTypeOpt = [
@@ -116,7 +113,7 @@ const unitOpt = [
       instrument.channels.push({
         insId: instrument.insId,                       // 所属仪器ID
         channelID: `CH${i + 1}`,                       // 通道ID
-        channelName: `通道${i + 1}`,                   // 通道名称
+        channelName: t('stores.instrumentformconfig.channel_name', { index: i + 1 }), // 通道名称（原文：通道{index}）
         highLimit: 100,                                // 高限报警值
         lowLimit: -10,                                 // 低限报警值
         sensorType: 'K',                               // 传感器类型 [热电偶：J, K, T, E, N, S, R, B, 热电阻：PT100]

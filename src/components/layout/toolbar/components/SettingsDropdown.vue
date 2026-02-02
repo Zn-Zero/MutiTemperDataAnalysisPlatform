@@ -1,6 +1,9 @@
 <script setup>
 import { ElMessageBox } from 'element-plus'
 import LanguageDialog from '@/components/dialog/language/index.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const langDialogVisible = ref(false) // 是否显示语言设置选项
 
 // 处理下拉菜单命令
@@ -17,8 +20,8 @@ const handleCommand = (command) => {
 
 // 打印设置
 const handlePrint = () => {
-  ElMessageBox.alert('打印设置功能开发中', '设置', {
-    confirmButtonText: '确定'
+  ElMessageBox.alert(t('components.layout.toolbar.settingsdropdown.print_feature_in_development'), t('components.layout.toolbar.settingsdropdown.settings'), { // 打印设置功能开发中  // 设置
+    confirmButtonText: t('components.layout.toolbar.settingsdropdown.confirm') // 确定
   })
 }
 
@@ -30,11 +33,11 @@ const handleLanguage = () => {
 
 <template>
   <el-dropdown @command="handleCommand">
-    <el-text class="menu-text">设置</el-text>
+    <el-text class="menu-text">{{ $t('components.layout.toolbar.settingsdropdown.settings') }}</el-text><!-- 设置 -->
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item command="print">打印设置</el-dropdown-item>
-        <el-dropdown-item command="language">设置语言</el-dropdown-item>
+        <el-dropdown-item command="print">{{ $t('components.layout.toolbar.settingsdropdown.print_settings') }}</el-dropdown-item><!-- 打印设置 -->
+        <el-dropdown-item command="language">{{ $t('components.layout.toolbar.settingsdropdown.set_language') }}</el-dropdown-item><!-- 设置语言 -->
       </el-dropdown-menu>
     </template>
   </el-dropdown>

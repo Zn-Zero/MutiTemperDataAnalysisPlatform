@@ -31,13 +31,13 @@ const handleClose = (done) => {
     :before-close="handleClose"
   >
     <el-tabs type="border-card">
-      <el-tab-pane label="基础设置">
+      <el-tab-pane :label="$t('components.dialog.instrument.index.basic_settings')"><!-- 基础设置 -->
         <base-info-form @close-form="handleClose"/>
       </el-tab-pane>
-      <el-tab-pane label="通道个性化设置">
+      <el-tab-pane :label="$t('components.dialog.instrument.index.channel_custom_settings')"><!-- 通道个性化设置 -->
         <costum-setting />
       </el-tab-pane>
-      <el-tab-pane label="产品标识">
+      <el-tab-pane :label="$t('components.dialog.instrument.index.product_id')"><!-- 产品标识 -->
         <prod-info />
       </el-tab-pane>
     </el-tabs>

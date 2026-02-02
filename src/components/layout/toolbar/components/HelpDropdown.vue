@@ -1,5 +1,9 @@
 <script setup>
 import { ElMessageBox } from 'element-plus'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 // 处理下拉菜单命令
 const handleCommand = (command) => {
   switch (command) {
@@ -14,15 +18,15 @@ const handleCommand = (command) => {
 
 // 显示二维码
 const handleQr = () => {
-  ElMessageBox.alert('二维码功能开发中', '帮助', {
-    confirmButtonText: '确定'
+  ElMessageBox.alert(t('components.layout.toolbar.helpdropdown.qr_feature_in_development'), t('components.layout.toolbar.helpdropdown.help'), { // 二维码功能开发中  // 帮助
+    confirmButtonText: t('components.layout.toolbar.helpdropdown.confirm') // 确定
   })
 }
 
 // 显示关于
 const handleAbout = () => {
-  ElMessageBox.alert('关于功能开发中', '帮助', {
-    confirmButtonText: '确定'
+  ElMessageBox.alert(t('components.layout.toolbar.helpdropdown.about_feature_in_development'), t('components.layout.toolbar.helpdropdown.help'), { // 关于功能开发中  // 帮助
+    confirmButtonText: t('components.layout.toolbar.helpdropdown.confirm') // 确定
   })
 }
 
@@ -30,11 +34,11 @@ const handleAbout = () => {
 
 <template>
   <el-dropdown @command="handleCommand">
-    <el-text class="menu-text">帮助</el-text>
+    <el-text class="menu-text">{{ $t('components.layout.toolbar.helpdropdown.help') }}</el-text><!-- 帮助 -->
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item command="qr">二维码</el-dropdown-item>
-        <el-dropdown-item command="about">关于</el-dropdown-item>
+        <el-dropdown-item command="qr">{{ $t('components.layout.toolbar.helpdropdown.qr_code') }}</el-dropdown-item><!-- 二维码 -->
+        <el-dropdown-item command="about">{{ $t('components.layout.toolbar.helpdropdown.about') }}</el-dropdown-item><!-- 关于 -->
       </el-dropdown-menu>
     </template>
   </el-dropdown>

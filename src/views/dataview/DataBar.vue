@@ -1,6 +1,5 @@
 <script setup>
 import * as echarts from 'echarts'
-
 onMounted(() => {
   // 初始化图表
   // const dataBarChart = ref(null)

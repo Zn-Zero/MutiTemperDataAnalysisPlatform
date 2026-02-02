@@ -1,6 +1,9 @@
 <script setup>
 import router from '@/router'
 import { ElMessageBox } from 'element-plus'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 // 处理下拉菜单命令
 const handleCommand = (command) => {
@@ -52,15 +55,15 @@ const handleTable = () => {
 
 // 历史数据
 const handleHistory = () => {
-  ElMessageBox.alert('历史数据功能开发中', '数据', {
-    confirmButtonText: '确定'
+  ElMessageBox.alert(t('components.layout.toolbar.datadropdown.history_feature_in_development'), t('components.layout.toolbar.datadropdown.data'), { // 历史数据功能开发中  // 数据
+    confirmButtonText: t('components.layout.toolbar.datadropdown.confirm') // 确定
   })
 }
 
 // 导入数据
 const handleImport = () => {
-  ElMessageBox.alert('导入数据功能开发中', '数据', {
-    confirmButtonText: '确定'
+  ElMessageBox.alert(t('components.layout.toolbar.datadropdown.import_feature_in_development'), t('components.layout.toolbar.datadropdown.data'), { // 导入数据功能开发中  // 数据
+    confirmButtonText: t('components.layout.toolbar.datadropdown.confirm') // 确定
   })
 }
 
@@ -68,15 +71,15 @@ const handleImport = () => {
 
 <template>
   <el-dropdown @command="handleCommand">
-    <el-text class="menu-text">数据</el-text>
+    <el-text class="menu-text">{{ $t('components.layout.toolbar.datadropdown.data') }}</el-text><!-- 数据 -->
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item command="data">数据</el-dropdown-item>
-        <el-dropdown-item command="line">曲线</el-dropdown-item>
-        <el-dropdown-item command="bar">柱状</el-dropdown-item>
-        <el-dropdown-item command="table">列表</el-dropdown-item>
-        <el-dropdown-item command="history">历史数据</el-dropdown-item>
-        <el-dropdown-item command="import">导入数据</el-dropdown-item>
+        <el-dropdown-item command="data">{{ $t('components.layout.toolbar.datadropdown.data') }}</el-dropdown-item><!-- 数据 -->
+        <el-dropdown-item command="line">{{ $t('components.layout.toolbar.datadropdown.line') }}</el-dropdown-item><!-- 曲线 -->
+        <el-dropdown-item command="bar">{{ $t('components.layout.toolbar.datadropdown.bar') }}</el-dropdown-item><!-- 柱状 -->
+        <el-dropdown-item command="table">{{ $t('components.layout.toolbar.datadropdown.table') }}</el-dropdown-item><!-- 列表 -->
+        <el-dropdown-item command="history">{{ $t('components.layout.toolbar.datadropdown.history') }}</el-dropdown-item><!-- 历史数据 -->
+        <el-dropdown-item command="import">{{ $t('components.layout.toolbar.datadropdown.import') }}</el-dropdown-item><!-- 导入数据 -->
       </el-dropdown-menu>
     </template>
   </el-dropdown>
