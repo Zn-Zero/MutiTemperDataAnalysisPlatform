@@ -39,11 +39,20 @@ export const useInstrumentFormConfigStore = defineStore('instrumentFormConfig', 
     value: `${count}`
   }))
 
-  // todo 起始通道选项，根据已连接设备的通道总数动态生成
-  const beginOpt = ref([])
-  for (let i = 1; i <= 64; i++) {  
-    beginOpt.value.push(`${i}`)
+  // todo 全通道选项，根据已连接设备的通道总数动态生成，用于选择起始通道和批量修改选择通道
+  const channelList = ref([])
+  // todo 在确定设备通道总数后，先调用generateDefaultChannel方法生成默认通道。然后调用此方法即时生成channelList选项
+  const getChannelList = () => {
+    channelList.value.splice(0, channelList.value.length) // 清空列表
+    // todo channelList每次调取时重新生成，label用channelID+channelName，value用channelID
+    for (let i = 1; i <= 64; i++) {  
+      channelList.value.push({ label: `CH${i}`, value: `CH${i}` })
+    }
+
+    return channelList
   }
+
+  getChannelList()
 
   const warningTypeOpt = [
     { label: t('stores.instrumentformconfig.warning_sound1'), value: 'sound1' }, // 原文：蜂鸣音1
@@ -154,10 +163,11 @@ const unitOpt = [
     portList,
     baudRateOpt,
     channelAmountOpt,
-    beginOpt,
+    channelList,
     warningTypeOpt,
     sensorTypeOpt,
     unitOpt,
+    getChannelList,
     generateDefaultChannel,
     updatePortList,
     addBaudRate,

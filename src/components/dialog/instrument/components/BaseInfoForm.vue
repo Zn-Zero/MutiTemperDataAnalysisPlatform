@@ -9,7 +9,7 @@ const portList = instrumentFormConfigStore.portList
 const baudRateOpt = instrumentFormConfigStore.baudRateOpt
 const warningTypeOpt = instrumentFormConfigStore.warningTypeOpt
 const channelAmountOpt = instrumentFormConfigStore.channelAmountOpt
-const beginOpt = instrumentFormConfigStore.beginOpt
+const channelList = instrumentFormConfigStore.getChannelList()
 const defaultInsConfig = instrumentFormConfigStore.defaultInsConfig
 
 // todo 默认值填充
@@ -117,10 +117,10 @@ onMounted(() => {
         <el-form-item :label="$t('components.dialog.instrument.baseinfoform.begin_channel')"><!-- 起始通道 -->
           <el-select v-model="form.begin" :placeholder="$t('components.dialog.instrument.baseinfoform.select_begin_channel')"><!-- 请选择起始通道 -->
             <el-option
-              v-for="item in beginOpt"
-              :key="item"
-              :label="item"
-              :value="item"
+              v-for="item in channelList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
             />
           </el-select>
         </el-form-item>
